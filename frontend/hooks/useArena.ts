@@ -4,6 +4,9 @@ import { useReadContract, useWriteContract, useAccount } from 'wagmi';
 import { keccak256, encodePacked, encodeAbiParameters, parseAbiParameters, toHex } from 'viem';
 import { ARENA_ENGINE_ADDRESS, ARENA_ENGINE_ABI } from '@/lib/contract';
 import { encodePredictions } from '@/lib/predictions';
+import { useMegaTransaction } from './useMegaTransaction';
+import { useWallet } from './useWallet';
+import { useCallback } from 'react';
 
 /**
  * MegaETH Gas Constants
@@ -59,85 +62,137 @@ export function useEntryFee(tier: number) {
   });
 }
 
+/**
+ * Join an arena. Uses Privy headless signing + eth_sendRawTransactionSync when available,
+ * falls back to wagmi writeContract otherwise.
+ */
 export function useJoinArena() {
+  const { sendTransaction, isPrivy, isReady } = useMegaTransaction();
   const { writeContract } = useWriteContract();
-  return (arenaId: bigint, entryFee: bigint) => {
-    writeContract({
-      address: ARENA_ENGINE_ADDRESS,
-      abi: ARENA_ENGINE_ABI,
-      functionName: 'joinArena',
-      args: [arenaId],
-      value: entryFee,
-      gas: 200_000n,
-      maxFeePerGas: MEGAETH_GAS_PRICE,
-      maxPriorityFeePerGas: 0n,
-    });
-  };
+
+  return useCallback(
+    async (arenaId: bigint, entryFee: bigint) => {
+      if (isPrivy && isReady) {
+        return sendTransaction({
+          functionName: 'joinArena',
+          args: [arenaId],
+          value: entryFee,
+          gas: 200_000n,
+        });
+      }
+      // Fallback to wagmi
+      writeContract({
+        address: ARENA_ENGINE_ADDRESS,
+        abi: ARENA_ENGINE_ABI,
+        functionName: 'joinArena',
+        args: [arenaId],
+        value: entryFee,
+        gas: 200_000n,
+        maxFeePerGas: MEGAETH_GAS_PRICE,
+        maxPriorityFeePerGas: 0n,
+      });
+    },
+    [sendTransaction, isPrivy, isReady, writeContract],
+  );
 }
 
+/**
+ * Commit a prediction. Uses headless signing for speed — no wallet popup during gameplay.
+ */
 export function useCommitPrediction() {
+  const { sendTransaction, isPrivy, isReady } = useMegaTransaction();
   const { writeContract } = useWriteContract();
-  const { address } = useAccount();
+  const { address } = useWallet();
 
-  return (arenaId: bigint, predictions: boolean[], salt: `0x${string}`) => {
-    if (!address) return;
+  return useCallback(
+    async (arenaId: bigint, predictions: boolean[], salt: `0x${string}`) => {
+      if (!address) return;
 
-    const predWords = encodePredictions(predictions);
+      const predWords = encodePredictions(predictions);
 
-    // commitHash = keccak256(abi.encodePacked(arenaId, player, salt, keccak256(abi.encode(predWords))))
-    const predHash = keccak256(
-      encodeAbiParameters(
-        parseAbiParameters('uint256[]'),
-        [predWords],
-      ),
-    );
-    const commitHash = keccak256(
-      encodePacked(
-        ['uint256', 'address', 'bytes32', 'bytes32'],
-        [arenaId, address, salt, predHash],
-      ),
-    );
-
-    writeContract({
-      address: ARENA_ENGINE_ADDRESS,
-      abi: ARENA_ENGINE_ABI,
-      functionName: 'commitPrediction',
-      args: [arenaId, commitHash],
-      gas: 100_000n,
-      maxFeePerGas: MEGAETH_GAS_PRICE,
-      maxPriorityFeePerGas: 0n,
-    });
-
-    // Store predictions + salt locally for reveal
-    if (typeof window !== 'undefined') {
-      localStorage.setItem(
-        `arena-${arenaId}-prediction`,
-        JSON.stringify({
-          predWords: predWords.map((w) => w.toString()),
-          salt,
-        }),
+      // commitHash = keccak256(abi.encodePacked(arenaId, player, salt, keccak256(abi.encode(predWords))))
+      const predHash = keccak256(
+        encodeAbiParameters(parseAbiParameters('uint256[]'), [predWords]),
       );
-    }
-  };
+      const commitHash = keccak256(
+        encodePacked(
+          ['uint256', 'address', 'bytes32', 'bytes32'],
+          [arenaId, address as `0x${string}`, salt, predHash],
+        ),
+      );
+
+      // Store predictions + salt locally for reveal
+      if (typeof window !== 'undefined') {
+        localStorage.setItem(
+          `arena-${arenaId}-prediction`,
+          JSON.stringify({
+            predWords: predWords.map((w) => w.toString()),
+            salt,
+          }),
+        );
+      }
+
+      if (isPrivy && isReady) {
+        return sendTransaction({
+          functionName: 'commitPrediction',
+          args: [arenaId, commitHash],
+          gas: 100_000n,
+        });
+      }
+      // Fallback
+      writeContract({
+        address: ARENA_ENGINE_ADDRESS,
+        abi: ARENA_ENGINE_ABI,
+        functionName: 'commitPrediction',
+        args: [arenaId, commitHash],
+        gas: 100_000n,
+        maxFeePerGas: MEGAETH_GAS_PRICE,
+        maxPriorityFeePerGas: 0n,
+      });
+    },
+    [address, sendTransaction, isPrivy, isReady, writeContract],
+  );
 }
 
+/**
+ * Reveal a prediction. Uses headless signing for instant reveal.
+ */
 export function useRevealPrediction() {
+  const { sendTransaction, isPrivy, isReady } = useMegaTransaction();
   const { writeContract } = useWriteContract();
 
-  return (arenaId: bigint) => {
-    const stored = localStorage.getItem(`arena-${arenaId}-prediction`);
-    if (!stored) throw new Error('No stored prediction found');
-    const { predWords, salt } = JSON.parse(stored);
-    writeContract({
-      address: ARENA_ENGINE_ADDRESS,
-      abi: ARENA_ENGINE_ABI,
-      functionName: 'revealPrediction',
-      args: [arenaId, (predWords as string[]).map((w: string) => BigInt(w)), salt as `0x${string}`],
-      gas: 200_000n,
-      maxFeePerGas: MEGAETH_GAS_PRICE,
-      maxPriorityFeePerGas: 0n,
-    });
-  };
+  return useCallback(
+    async (arenaId: bigint) => {
+      const stored = localStorage.getItem(`arena-${arenaId}-prediction`);
+      if (!stored) throw new Error('No stored prediction found');
+      const { predWords, salt } = JSON.parse(stored);
+
+      const args = [
+        arenaId,
+        (predWords as string[]).map((w: string) => BigInt(w)),
+        salt as `0x${string}`,
+      ] as const;
+
+      if (isPrivy && isReady) {
+        return sendTransaction({
+          functionName: 'revealPrediction',
+          args,
+          gas: 200_000n,
+        });
+      }
+      // Fallback
+      writeContract({
+        address: ARENA_ENGINE_ADDRESS,
+        abi: ARENA_ENGINE_ABI,
+        functionName: 'revealPrediction',
+        args: [...args],
+        gas: 200_000n,
+        maxFeePerGas: MEGAETH_GAS_PRICE,
+        maxPriorityFeePerGas: 0n,
+      });
+    },
+    [sendTransaction, isPrivy, isReady, writeContract],
+  );
 }
 
 /** Generate a random salt for commitment */
