@@ -9,9 +9,24 @@ via_ir = true
 
 gas_reports = ["*"]
 
+# MegaETH-specific: use dynamic_test_linking for faster compilation
+dynamic_test_linking = true
+
 [fuzz]
 runs = 500
 
+[invariant]
+runs = 256
+depth = 15
+fail_on_revert = false
+show_metrics = true
+
+# ─── MegaETH RPC Endpoints ────────────────────────────────────────────
 [rpc_endpoints]
 megaeth = "https://mainnet.megaeth.com/rpc"
 megaeth_testnet = "https://carrot.megaeth.com/rpc"
+
+# ─── MegaETH Block Explorer Verification ──────────────────────────────
+[etherscan]
+megaeth = { key = "${MEGAETH_ETHERSCAN_KEY}", url = "https://mega.etherscan.io/api" }
+megaeth_testnet = { key = "${MEGAETH_ETHERSCAN_KEY}", url = "https://megaeth-testnet-v2.blockscout.com/api" }

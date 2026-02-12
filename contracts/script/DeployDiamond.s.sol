@@ -17,6 +17,21 @@ import {IDiamondLoupe} from "../src/interfaces/IDiamondLoupe.sol";
 import {IERC165} from "../src/interfaces/IERC165.sol";
 import {LibDiamond} from "../src/libraries/LibDiamond.sol";
 
+/// @title Deploy BlockArena Diamond
+/// @dev MegaETH deployment:
+///   forge script script/DeployDiamond.s.sol \
+///     --rpc-url megaeth_testnet \
+///     --broadcast \
+///     --skip-simulation \
+///     --gas-limit 10000000 \
+///     --interactives 1 \
+///     -vvvv
+///
+///   Verify (each facet):
+///   forge verify-contract <address> src/facets/ArenaFacet.sol:ArenaFacet \
+///     --chain 6343 \
+///     --etherscan-api-key $MEGAETH_ETHERSCAN_KEY \
+///     --verifier-url https://megaeth-testnet-v2.blockscout.com/api
 contract DeployDiamond is Script {
     function run() external {
         address owner = msg.sender;

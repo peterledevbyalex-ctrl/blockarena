@@ -5,6 +5,14 @@ import { keccak256, encodePacked, encodeAbiParameters, parseAbiParameters, toHex
 import { ARENA_ENGINE_ADDRESS, ARENA_ENGINE_ABI } from '@/lib/contract';
 import { encodePredictions } from '@/lib/predictions';
 
+/**
+ * MegaETH Gas Constants
+ * - Base fee: fixed 0.001 gwei (10^6 wei). DO NOT use eth_gasPrice (adds 20% buffer).
+ * - Intrinsic gas: 60,000 (not 21K like Ethereum).
+ * - Use eth_sendRawTransactionSync (EIP-7966) for instant receipts — no polling needed.
+ */
+const MEGAETH_GAS_PRICE = 1_000_000n; // 0.001 gwei — hardcoded per MegaETH docs
+
 export function useArenaCount() {
   return useReadContract({
     address: ARENA_ENGINE_ADDRESS,
@@ -61,7 +69,8 @@ export function useJoinArena() {
       args: [arenaId],
       value: entryFee,
       gas: 200_000n,
-      maxFeePerGas: 1_000_000n,
+      maxFeePerGas: MEGAETH_GAS_PRICE,
+      maxPriorityFeePerGas: 0n,
     });
   };
 }
@@ -95,7 +104,8 @@ export function useCommitPrediction() {
       functionName: 'commitPrediction',
       args: [arenaId, commitHash],
       gas: 100_000n,
-      maxFeePerGas: 1_000_000n,
+      maxFeePerGas: MEGAETH_GAS_PRICE,
+      maxPriorityFeePerGas: 0n,
     });
 
     // Store predictions + salt locally for reveal
@@ -124,7 +134,8 @@ export function useRevealPrediction() {
       functionName: 'revealPrediction',
       args: [arenaId, (predWords as string[]).map((w: string) => BigInt(w)), salt as `0x${string}`],
       gas: 200_000n,
-      maxFeePerGas: 1_000_000n,
+      maxFeePerGas: MEGAETH_GAS_PRICE,
+      maxPriorityFeePerGas: 0n,
     });
   };
 }

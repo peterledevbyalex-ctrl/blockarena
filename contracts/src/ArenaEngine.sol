@@ -16,7 +16,28 @@ interface IBlockArenaHighlights {
 }
 
 /// @title ArenaEngine v4 — Trustless oracle-based prediction game for MegaETH
-/// @dev Price tapes built permissionlessly from RedStone oracle readings
+/// @dev Price tapes built permissionlessly from RedStone oracle readings.
+///
+/// ─── MegaETH Gas Model Notes ─────────────────────────────────────────
+/// • Intrinsic gas: 60,000 (not 21K like Ethereum)
+/// • Base fee: fixed 0.001 gwei (10^6 wei). No EIP-1559 adjustment.
+/// • Gas forwarding: 98/100 (not 63/64)
+/// • Per-TX limits: 200M compute, 500K KV updates, 1,000 state growth slots, 128KB calldata
+/// • SSTORE (0→non-zero): 2,000,000 gas × bucket_multiplier — avoid new slots!
+/// • SSTORE (non-zero→non-zero): ~100-2,100 gas — reuse slots via epoching pattern
+/// • Volatile data access: after block.number/block.timestamp, only 20M compute gas remaining
+/// • Deploy with: forge script --skip-simulation --gas-limit 5000000
+///
+/// ─── Storage Optimization ────────────────────────────────────────────
+/// Uses epoching pattern: arenaEpoch[arenaId] increments on reset, making
+/// old playerState entries unreachable without deleting storage (avoiding
+/// new slot allocation). Arena struct fields are reused in-place on reset.
+///
+/// ─── finalizeArena Gas Budget ────────────────────────────────────────
+/// With N players: ~N × (1 SLOAD + 1 SSTORE + scoring computation + ETH transfer)
+/// Recommended max: ~50 players per arena to stay well under 200M compute limit.
+/// Each new player joining allocates ~3 state growth slots (commitHash, revealed, score).
+/// At 50 players per arena: 150 state growth slots << 1,000 limit. Safe.
 contract ArenaEngine is Pausable, Ownable2Step, ReentrancyGuard {
 
     enum Tier { Low, Mid, High, VIP }

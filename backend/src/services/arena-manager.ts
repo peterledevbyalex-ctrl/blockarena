@@ -6,6 +6,15 @@ import { PriceOracle } from './price-oracle';
 
 const TIERS = [0, 1, 2]; // rotate through tiers
 
+/**
+ * MegaETH Gas Constants
+ * Base fee: fixed 0.001 gwei (10^6 wei). Don't use eth_gasPrice (adds 20% buffer).
+ * Intrinsic gas: 60,000 (not 21K like Ethereum).
+ * Use eth_sendRawTransactionSync (EIP-7966) for instant receipts when available.
+ */
+const MEGAETH_GAS_PRICE = 1_000_000n; // 0.001 gwei in wei
+const MEGAETH_MAX_PRIORITY_FEE = 0n;
+
 export class ArenaManager {
   private provider: ethers.JsonRpcProvider;
   private wallet: ethers.Wallet;
@@ -57,7 +66,10 @@ export class ArenaManager {
       // MegaETH has ~10ms blocks, so durationBlocks ≈ durationSec * 100
       const durationBlocks = config.arenaDefaultDurationSec * 100;
 
-      const tx = await this.contract.createArena(tier, entryFee, durationBlocks, 'ETH/USD');
+      const tx = await this.contract.createArena(tier, entryFee, durationBlocks, 'ETH/USD', {
+        maxFeePerGas: MEGAETH_GAS_PRICE,
+        maxPriorityFeePerGas: MEGAETH_MAX_PRIORITY_FEE,
+      });
       const receipt = await tx.wait();
       console.log(`[ArenaManager] Created arena tier=${tier} tx=${receipt?.hash}`);
     } catch (err) {
@@ -105,7 +117,10 @@ export class ArenaManager {
       try {
         const tape = await this.priceOracle.buildPriceTape(arena.asset_pair, arena.start_block, arena.end_block);
         if (tape.length > 0) {
-          const tapeTx = await this.contract.submitPriceTape(arena.arena_id, tape);
+          const tapeTx = await this.contract.submitPriceTape(arena.arena_id, tape, {
+            maxFeePerGas: MEGAETH_GAS_PRICE,
+            maxPriorityFeePerGas: MEGAETH_MAX_PRIORITY_FEE,
+          });
           await tapeTx.wait();
           console.log(`[ArenaManager] Submitted price tape for arena #${arena.arena_id}`);
         }
@@ -114,7 +129,10 @@ export class ArenaManager {
       }
 
       // Finalize with player list
-      const tx = await this.contract.finalizeArena(arena.arena_id, playerAddresses);
+      const tx = await this.contract.finalizeArena(arena.arena_id, playerAddresses, {
+        maxFeePerGas: MEGAETH_GAS_PRICE,
+        maxPriorityFeePerGas: MEGAETH_MAX_PRIORITY_FEE,
+      });
       await tx.wait();
       console.log(`[ArenaManager] Finalized arena #${arena.arena_id} with ${playerAddresses.length} players`);
     } catch (err) {

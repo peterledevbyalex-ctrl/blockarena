@@ -8,6 +8,7 @@ export class EventIndexer {
   private provider: ethers.WebSocketProvider | null = null;
   private contract: ethers.Contract | null = null;
   private running = false;
+  private keepaliveInterval: ReturnType<typeof setInterval> | null = null;
 
   async start() {
     if (!config.arenaEngineAddress || !config.wsUrl) {
@@ -22,6 +23,10 @@ export class EventIndexer {
 
   stop() {
     this.running = false;
+    if (this.keepaliveInterval) {
+      clearInterval(this.keepaliveInterval);
+      this.keepaliveInterval = null;
+    }
     if (this.provider) {
       this.provider.destroy();
       this.provider = null;
@@ -37,6 +42,16 @@ export class EventIndexer {
         ARENA_ENGINE_ABI,
         this.provider
       );
+
+      // MegaETH WebSocket keepalive: send eth_chainId every 30 seconds
+      // Required to prevent disconnection per MegaETH WS guidelines
+      this.keepaliveInterval = setInterval(async () => {
+        try {
+          await this.provider?.send('eth_chainId', []);
+        } catch {
+          // Keepalive failed — connection may be dead, reconnect will handle it
+        }
+      }, 30_000);
 
       this.attachListeners();
       await this.backfillEvents();

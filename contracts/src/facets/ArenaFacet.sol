@@ -14,6 +14,15 @@ interface IBlockArenaHighlights {
 }
 
 /// @title ArenaFacet — Arena lifecycle (create, join, commit, reveal, finalize)
+/// @dev MegaETH Gas Notes:
+///   - Intrinsic gas: 60,000 (not 21K). Base fee: 0.001 gwei (10^6 wei).
+///   - Per-TX limits: 200M compute, 500K KV updates, 1,000 state growth slots, 128KB calldata.
+///   - SSTORE (0→non-zero): 2M+ gas × bucket_multiplier. Reuse slots via epoching.
+///   - joinArena: ~3 new state growth slots per player (commitHash, revealed, score).
+///   - finalizeArena: recommend max ~50 players (150 state growth slots, well under 1K limit).
+///   - Volatile data: block.number access triggers 20M compute gas cap for remainder of TX.
+///     We access block.number early (unavoidable for arena logic), so keep total compute < 20M.
+///   - Deploy with: forge script --skip-simulation --gas-limit 5000000
 contract ArenaFacet {
     // Events
     event ArenaCreated(uint256 indexed arenaId, LibBlockArena.Tier tier, uint128 entryFee, uint40 startBlock, uint40 endBlock);

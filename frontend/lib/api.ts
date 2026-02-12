@@ -77,24 +77,40 @@ export async function fetchLeaderboard(): Promise<ApiLeaderboardEntry[]> {
   return (await apiFetch<ApiLeaderboardEntry[]>('/leaderboard')) ?? [];
 }
 
-/** Connect to WebSocket for live updates */
+/**
+ * Connect to WebSocket for live updates.
+ * Implements keepalive ping every 30s to prevent disconnection
+ * (MegaETH WS endpoints require periodic activity).
+ */
 export function connectWebSocket(
   onMessage: (msg: WsMessage) => void,
   onError?: () => void,
 ): () => void {
   let ws: WebSocket | null = null;
   let closed = false;
+  let keepalive: ReturnType<typeof setInterval> | null = null;
 
   function connect() {
     if (closed) return;
     try {
       ws = new WebSocket(WS_URL);
+
+      ws.onopen = () => {
+        // MegaETH keepalive: ping every 30 seconds to prevent disconnection
+        keepalive = setInterval(() => {
+          if (ws && ws.readyState === WebSocket.OPEN) {
+            ws.send(JSON.stringify({ type: 'ping' }));
+          }
+        }, 30_000);
+      };
+
       ws.onmessage = (e) => {
         try {
           onMessage(JSON.parse(e.data));
         } catch { /* ignore */ }
       };
       ws.onclose = () => {
+        if (keepalive) { clearInterval(keepalive); keepalive = null; }
         if (!closed) setTimeout(connect, 3000);
       };
       ws.onerror = () => {
@@ -110,6 +126,7 @@ export function connectWebSocket(
 
   return () => {
     closed = true;
+    if (keepalive) { clearInterval(keepalive); keepalive = null; }
     ws?.close();
   };
 }

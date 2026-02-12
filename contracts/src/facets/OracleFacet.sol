@@ -6,6 +6,13 @@ import {LibBlockArena} from "../libraries/LibBlockArena.sol";
 import {IRedStonePriceFeed} from "../interfaces/IRedStonePriceFeed.sol";
 
 /// @title OracleFacet — RedStone oracle integration
+/// @dev MegaETH Notes:
+///   - recordTick accesses block.number → triggers 20M volatile data gas cap.
+///     Single tick recording is lightweight (~50K gas), well under limit.
+///   - recordTicks (batch): loop writes to priceTapeWords. Each new uint256 word
+///     is a 0→non-zero SSTORE (2M+ gas). For 256-tick arena: 1 word = 1 new slot.
+///     For 1500-tick arena: 6 words = 6 new slots. Well under 1,000 slot limit.
+///   - maxTicks param prevents exceeding per-TX gas limits. Recommend maxTicks ≤ 500.
 contract OracleFacet {
     event OracleSet(address indexed oracle);
     event TicksRecorded(uint256 indexed arenaId, uint40 count);

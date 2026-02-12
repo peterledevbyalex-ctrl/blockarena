@@ -4,7 +4,19 @@ pragma solidity ^0.8.24;
 import {IRedStonePriceFeed} from "../interfaces/IRedStonePriceFeed.sol";
 
 /// @title LibBlockArena — Diamond Storage for BlockArena
-/// @notice ALL application state lives in one struct accessed via a fixed storage slot
+/// @notice ALL application state lives in one struct accessed via a fixed storage slot.
+///
+/// ─── MegaETH Storage Cost Model ──────────────────────────────────────
+/// SSTORE (0→non-zero): 2,000,000 gas × bucket_multiplier (EXPENSIVE!)
+/// SSTORE (non-zero→non-zero): ~100-2,100 gas (CHEAP — reuse slots!)
+/// Strategy: Epoching pattern — increment arenaEpoch[id] on reset so old
+/// playerState keys become unreachable. The Arena struct fields are updated
+/// in-place (non-zero→non-zero SSTOREs = cheap). Only new players joining
+/// a fresh epoch allocate new storage slots.
+///
+/// Per-TX limit: max 1,000 state growth slots. Each new player joining
+/// allocates ~3 slots. So max ~333 new players per TX (in practice, arenas
+/// have 10-50 players, well within limits).
 library LibBlockArena {
     bytes32 constant STORAGE_SLOT = keccak256("blockarena.storage");
 
