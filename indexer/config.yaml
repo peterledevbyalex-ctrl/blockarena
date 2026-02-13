@@ -31,7 +31,7 @@ networks:
   - id: 6343  # MegaETH testnet
     rpc_config:
       url: https://carrot.megaeth.com/rpc
-    start_block: 0
+    start_block: 11250000
     contracts:
       - name: BlockArena
         address: 0xDe32993819Ca96eb08e8bE8b7D5A31585a17D033
