@@ -25,13 +25,19 @@ export class ArenaManager {
   private tierIndex = 0;
 
   constructor(priceOracle: PriceOracle) {
-    this.provider = new ethers.JsonRpcProvider(config.rpcUrl, {
-      chainId: config.chainId,
-      name: 'megaeth',
-    });
-    this.wallet = new ethers.Wallet(config.operatorPrivateKey, this.provider);
-    this.contract = new ethers.Contract(config.arenaEngineAddress, ARENA_ENGINE_ABI, this.wallet);
     this.priceOracle = priceOracle;
+    if (config.arenaEngineAddress && config.operatorPrivateKey) {
+      this.provider = new ethers.JsonRpcProvider(config.rpcUrl, {
+        chainId: config.chainId,
+        name: 'megaeth',
+      });
+      this.wallet = new ethers.Wallet(config.operatorPrivateKey, this.provider);
+      this.contract = new ethers.Contract(config.arenaEngineAddress, ARENA_ENGINE_ABI, this.wallet);
+    } else {
+      this.provider = null as any;
+      this.wallet = null as any;
+      this.contract = null as any;
+    }
   }
 
   start() {

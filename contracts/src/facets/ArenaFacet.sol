@@ -62,7 +62,7 @@ contract ArenaFacet {
         LibBlockArena.AppStorage storage s = LibBlockArena.appStorage();
 
         arenaId = s.nextArenaId++;
-        uint40 start = uint40(block.number) + 100;
+        uint40 start = uint40(block.number) + 600; // ~10 min join window on testnet
         s.arenas[arenaId] = LibBlockArena.Arena({
             startBlock: start,
             endBlock: start + duration,
@@ -237,7 +237,7 @@ contract ArenaFacet {
         uint32 newEpoch = s.arenaEpoch[arenaId] + 1;
         s.arenaEpoch[arenaId] = newEpoch;
 
-        uint40 start = uint40(block.number) + 100;
+        uint40 start = uint40(block.number) + 600;
         a.startBlock = start;
         a.endBlock = start + duration;
         a.pot = 0;

@@ -1,4 +1,4 @@
-export const DIAMOND_ADDRESS = '0x0000000000000000000000000000000000000000' as const; // TODO: deploy and fill
+export const DIAMOND_ADDRESS = '0xDe32993819Ca96eb08e8bE8b7D5A31585a17D033' as const;
 
 // Backwards compat alias
 export const ARENA_ENGINE_ADDRESS = DIAMOND_ADDRESS;

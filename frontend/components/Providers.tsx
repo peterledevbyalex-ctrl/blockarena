@@ -26,7 +26,7 @@ function PrivyWrapper({ children }: { children: ReactNode }) {
         loginMethods: ['email', 'google', 'twitter', 'wallet'],
         appearance: {
           theme: 'dark',
-          accentColor: '#a855f7', // purple-500 to match neon aesthetic
+          accentColor: '#ffffff',
           logo: undefined,
         },
       }}

@@ -11,7 +11,7 @@ export class EventIndexer {
   private keepaliveInterval: ReturnType<typeof setInterval> | null = null;
 
   async start() {
-    if (!config.arenaEngineAddress || !config.wsUrl) {
+    if (!config.arenaEngineAddress || !config.wsUrl || config.wsUrl === 'none') {
       console.warn('[Indexer] Missing contract address or WS URL, skipping');
       return;
     }

@@ -1,6 +1,7 @@
 'use client';
 
 import { useReadContract, useWriteContract, useAccount } from 'wagmi';
+import { useQueryClient } from '@tanstack/react-query';
 import { keccak256, encodePacked, encodeAbiParameters, parseAbiParameters, toHex } from 'viem';
 import { ARENA_ENGINE_ADDRESS, ARENA_ENGINE_ABI } from '@/lib/contract';
 import { encodePredictions } from '@/lib/predictions';
@@ -21,6 +22,7 @@ export function useArenaCount() {
     address: ARENA_ENGINE_ADDRESS,
     abi: ARENA_ENGINE_ABI,
     functionName: 'nextArenaId',
+    query: { refetchInterval: 5_000 },
   });
 }
 
@@ -30,6 +32,7 @@ export function useArena(arenaId: bigint) {
     abi: ARENA_ENGINE_ABI,
     functionName: 'getArena',
     args: [arenaId],
+    query: { refetchInterval: 5_000 },
   });
 }
 
@@ -39,7 +42,7 @@ export function usePlayerState(arenaId: bigint, player?: `0x${string}`) {
     abi: ARENA_ENGINE_ABI,
     functionName: 'getPlayerState',
     args: player ? [arenaId, player] : undefined,
-    query: { enabled: !!player },
+    query: { enabled: !!player, refetchInterval: 5_000 },
   });
 }
 
@@ -69,16 +72,24 @@ export function useEntryFee(tier: number) {
 export function useJoinArena() {
   const { sendTransaction, isPrivy, isReady } = useMegaTransaction();
   const { writeContract } = useWriteContract();
+  const queryClient = useQueryClient();
 
   return useCallback(
     async (arenaId: bigint, entryFee: bigint) => {
+      const invalidate = () => {
+        // Force refresh arena data after join
+        setTimeout(() => queryClient.invalidateQueries(), 2_000);
+      };
+
       if (isPrivy && isReady) {
-        return sendTransaction({
+        const result = await sendTransaction({
           functionName: 'joinArena',
           args: [arenaId],
           value: entryFee,
           gas: 200_000n,
         });
+        invalidate();
+        return result;
       }
       // Fallback to wagmi
       writeContract({
@@ -91,8 +102,9 @@ export function useJoinArena() {
         maxFeePerGas: MEGAETH_GAS_PRICE,
         maxPriorityFeePerGas: 0n,
       });
+      invalidate();
     },
-    [sendTransaction, isPrivy, isReady, writeContract],
+    [sendTransaction, isPrivy, isReady, writeContract, queryClient],
   );
 }
 

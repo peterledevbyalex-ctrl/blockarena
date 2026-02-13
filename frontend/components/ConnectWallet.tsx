@@ -1,28 +1,23 @@
 'use client';
 
 import { useWallet } from '@/hooks/useWallet';
-import { motion } from 'framer-motion';
 
 export function ConnectWallet() {
   const { shortAddress, isConnected, isLoading, login, loginWithInjected, logout, isPrivy } = useWallet();
 
   if (isLoading) {
-    return (
-      <div className="px-4 py-2 rounded-full glass-card text-xs text-gray-500 animate-pulse">
-        Loading...
-      </div>
-    );
+    return <div className="px-3 py-1.5 rounded text-xs text-neutral-600">Loading...</div>;
   }
 
   if (isConnected) {
     return (
       <div className="flex items-center gap-2">
-        <span className="font-mono text-xs px-2.5 py-1 rounded-full bg-green-500/10 text-green-400 border border-green-500/20 neon-text-green text-[11px]">
+        <span className="font-mono text-xs px-2 py-1 rounded bg-[#161616] text-green-500 border border-[#222]">
           {shortAddress}
         </span>
         <button
           onClick={logout}
-          className="px-2.5 py-1 text-xs bg-red-600/20 hover:bg-red-600/40 text-red-400 rounded-full border border-red-500/20 transition-all"
+          className="px-2 py-1 text-xs text-neutral-500 hover:text-white transition-colors"
         >
           ✕
         </button>
@@ -32,22 +27,20 @@ export function ConnectWallet() {
 
   return (
     <div className="flex items-center gap-2">
-      <motion.button
-        whileTap={{ scale: 0.95 }}
+      <button
         onClick={login}
-        className="px-4 py-2 rounded-full font-bold text-sm bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 shadow-[0_0_15px_rgba(139,92,246,0.3)] transition-all"
+        className="px-4 py-1.5 rounded text-xs font-bold bg-white text-black hover:bg-neutral-200 transition-colors"
       >
-        {isPrivy ? '⚡ Play Now' : 'Connect'}
-      </motion.button>
+        {isPrivy ? 'PLAY' : 'CONNECT'}
+      </button>
       {!isPrivy && (
-        <motion.button
-          whileTap={{ scale: 0.95 }}
+        <button
           onClick={loginWithInjected}
-          className="w-9 h-9 rounded-full glass-card flex items-center justify-center hover:bg-white/10 transition-all"
+          className="px-2 py-1.5 rounded text-xs border border-[#222] hover:bg-[#161616] transition-colors"
           title="MetaMask"
         >
           🦊
-        </motion.button>
+        </button>
       )}
     </div>
   );

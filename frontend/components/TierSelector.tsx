@@ -1,7 +1,6 @@
 'use client';
 
 import { TIER_CONFIG, type ArenaTier } from '@/types';
-import { motion } from 'framer-motion';
 
 interface TierSelectorProps {
   selected: ArenaTier | 'all';
@@ -10,21 +9,15 @@ interface TierSelectorProps {
 
 export function TierSelector({ selected, onSelect }: TierSelectorProps) {
   return (
-    <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-none">
-      <TierButton
-        active={selected === 'all'}
-        onClick={() => onSelect('all')}
-        label="ALL"
-        color="text-white"
-      />
+    <div className="flex gap-2 overflow-x-auto">
+      <FilterButton active={selected === 'all'} onClick={() => onSelect('all')} label="ALL" />
       {(Object.entries(TIER_CONFIG) as [ArenaTier, (typeof TIER_CONFIG)[ArenaTier]][]).map(
         ([tier, cfg]) => (
-          <TierButton
+          <FilterButton
             key={tier}
             active={selected === tier}
             onClick={() => onSelect(tier)}
             label={cfg.label.toUpperCase()}
-            color={cfg.color}
           />
         ),
       )}
@@ -32,18 +25,17 @@ export function TierSelector({ selected, onSelect }: TierSelectorProps) {
   );
 }
 
-function TierButton({ active, onClick, label, color }: { active: boolean; onClick: () => void; label: string; color: string }) {
+function FilterButton({ active, onClick, label }: { active: boolean; onClick: () => void; label: string }) {
   return (
-    <motion.button
-      whileTap={{ scale: 0.95 }}
+    <button
       onClick={onClick}
-      className={`relative px-4 py-2 rounded-full text-xs font-display font-bold whitespace-nowrap tracking-wider transition-all ${
+      className={`px-3 py-1.5 rounded text-[10px] font-bold tracking-wider transition-colors ${
         active
-          ? `${color} bg-white/10 border border-white/20 shadow-[0_0_10px_rgba(255,255,255,0.1)]`
-          : 'text-gray-600 bg-transparent hover:text-gray-400 hover:bg-white/5'
+          ? 'bg-white text-black'
+          : 'text-neutral-600 hover:text-neutral-400 border border-[#222]'
       }`}
     >
       {label}
-    </motion.button>
+    </button>
   );
 }

@@ -2,9 +2,6 @@
 
 import { useState, useCallback } from 'react';
 import { useCommitPrediction, useRevealPrediction, generateSalt } from '@/hooks/useArena';
-import { useSoundEffects } from '@/hooks/useSoundEffects';
-import { GodStreak } from './GodStreak';
-import { motion, AnimatePresence } from 'framer-motion';
 
 interface PredictionPanelProps {
   arenaId: bigint;
@@ -19,108 +16,82 @@ interface PredictionPanelProps {
 export function PredictionPanel({ arenaId, numTicks, isActive, isEnded, onWin, onStreak, onShare }: PredictionPanelProps) {
   const [predictions, setPredictions] = useState<boolean[]>(new Array(numTicks).fill(false));
   const [committed, setCommitted] = useState(false);
-  const [currentStreak, setCurrentStreak] = useState(0);
-  const [accuracy, setAccuracy] = useState(0);
+  const [committing, setCommitting] = useState(false);
+  const [revealing, setRevealing] = useState(false);
   const commitPrediction = useCommitPrediction();
   const revealPrediction = useRevealPrediction();
-  const { playTick, playCorrect, playWin, playStreak: playStreakSound } = useSoundEffects();
 
   const togglePrediction = useCallback((index: number) => {
-    playTick();
     setPredictions(prev => {
       const next = [...prev];
       next[index] = !next[index];
       return next;
     });
-  }, [playTick]);
+  }, []);
 
   const setAllUp = () => setPredictions(new Array(numTicks).fill(true));
   const setAllDown = () => setPredictions(new Array(numTicks).fill(false));
   const randomize = () => setPredictions(Array.from({ length: numTicks }, () => Math.random() > 0.5));
 
-  const handleCommit = () => {
-    const salt = generateSalt();
-    commitPrediction(arenaId, predictions, salt);
-    setCommitted(true);
-    playWin();
+  const handleCommit = async () => {
+    setCommitting(true);
+    try {
+      const salt = generateSalt();
+      await commitPrediction(arenaId, predictions, salt);
+      setCommitted(true);
+    } catch (err) {
+      console.error('Commit failed:', err);
+    } finally {
+      setCommitting(false);
+    }
   };
 
-  const handleReveal = () => {
-    revealPrediction(arenaId);
-    onShare?.();
+  const handleReveal = async () => {
+    setRevealing(true);
+    try {
+      await revealPrediction(arenaId);
+      onShare?.();
+    } catch (err) {
+      console.error('Reveal failed:', err);
+    } finally {
+      setRevealing(false);
+    }
   };
 
-  // Streak calculation
-  let maxStreak = 0;
-  let streak = 0;
-  for (const p of predictions) {
-    if (p) { streak++; maxStreak = Math.max(maxStreak, streak); }
-    else streak = 0;
-  }
   const upCount = predictions.filter(Boolean).length;
-
   const isLargeTape = numTicks > 256;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="glass-card rounded-2xl p-5 border border-purple-500/20"
-    >
+    <div className="border border-[#222] rounded-lg p-5 bg-[#111]">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="font-display text-lg font-bold text-white">
-          PREDICTIONS
-        </h3>
-        <span className="text-xs text-gray-500 font-display">{numTicks} TICKS</span>
+        <h3 className="text-sm font-bold text-white uppercase tracking-wider">PREDICTIONS</h3>
+        <span className="text-xs text-neutral-600">{numTicks} TICKS</span>
       </div>
-
-      {/* Live accuracy */}
-      <div className="flex items-center gap-4 mb-4">
-        <div className="flex-1 flex items-center gap-2">
-          <div className="text-sm text-gray-400">Accuracy</div>
-          <div className="font-display text-lg font-bold neon-text-green">{upCount > 0 ? ((upCount / numTicks) * 100).toFixed(0) : 0}%</div>
-        </div>
-        {currentStreak > 0 && (
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            className="px-3 py-1 rounded-full bg-orange-500/20 border border-orange-500/30 text-orange-400 text-sm font-bold"
-          >
-            🔥 {currentStreak} in a row!
-          </motion.div>
-        )}
-      </div>
-
-      {maxStreak >= 3 && (
-        <div className="mb-4">
-          <GodStreak streak={maxStreak} best={maxStreak} />
-        </div>
-      )}
 
       {isActive && !committed && (
         <>
           {/* Quick actions */}
           <div className="flex gap-2 mb-4">
-            <button onClick={setAllUp} className="flex-1 py-2 text-sm font-bold rounded-lg bg-green-900/30 border border-green-500/20 text-green-400 hover:bg-green-900/50 active:scale-95 transition-all">
-              ALL ↑
+            <button onClick={setAllUp} className="flex-1 py-2 text-xs font-bold rounded border border-green-500/20 text-green-500 hover:bg-green-500/10 transition-colors">
+              ALL UP
             </button>
-            <button onClick={setAllDown} className="flex-1 py-2 text-sm font-bold rounded-lg bg-red-900/30 border border-red-500/20 text-red-400 hover:bg-red-900/50 active:scale-95 transition-all">
-              ALL ↓
+            <button onClick={setAllDown} className="flex-1 py-2 text-xs font-bold rounded border border-red-500/20 text-red-500 hover:bg-red-500/10 transition-colors">
+              ALL DOWN
             </button>
-            <button onClick={randomize} className="flex-1 py-2 text-sm font-bold rounded-lg glass-card hover:bg-white/10 active:scale-95 transition-all">
-              🎲 MIX
+            <button onClick={randomize} className="flex-1 py-2 text-xs font-bold rounded border border-[#222] text-neutral-400 hover:bg-[#161616] transition-colors">
+              RANDOM
             </button>
           </div>
 
-          {/* Prediction count */}
-          <div className="flex justify-between text-xs text-gray-500 mb-2">
-            <span className="neon-text-green">{upCount} ↑</span>
-            <span className="neon-text-red">{numTicks - upCount} ↓</span>
+          {/* Summary */}
+          <div className="flex justify-between text-xs text-neutral-500 mb-3">
+            <span className="text-green-500">{upCount} UP</span>
+            <span className="text-red-500">{numTicks - upCount} DOWN</span>
           </div>
 
           {isLargeTape ? (
             <div className="mb-4">
-              <div className="flex h-20 rounded-xl overflow-hidden border border-gray-700/50">
+              <div className="flex h-16 rounded overflow-hidden border border-[#222]">
                 {Array.from({ length: Math.min(numTicks, 300) }).map((_, i) => {
                   const idx = Math.floor((i / 300) * numTicks);
                   return (
@@ -133,79 +104,62 @@ export function PredictionPanel({ arenaId, numTicks, isActive, isEnded, onWin, o
                         const val = !next[start];
                         for (let j = start; j < Math.min(start + chunkSize, numTicks); j++) next[j] = val;
                         setPredictions(next);
-                        playTick();
                       }}
                       className={`flex-1 cursor-pointer transition-colors ${
-                        predictions[idx]
-                          ? 'bg-green-500 shadow-[inset_0_0_10px_rgba(57,255,20,0.3)]'
-                          : 'bg-red-500 shadow-[inset_0_0_10px_rgba(255,23,68,0.3)]'
+                        predictions[idx] ? 'bg-green-500/60' : 'bg-red-500/60'
                       }`}
                     />
                   );
                 })}
               </div>
-              <p className="text-[10px] text-gray-600 mt-1">Tap to toggle · Each bar ≈ {Math.ceil(numTicks / 300)} ticks</p>
+              <p className="text-[10px] text-neutral-600 mt-1">Tap to toggle · Each bar ≈ {Math.ceil(numTicks / 300)} ticks</p>
             </div>
           ) : (
-            <div className="flex flex-wrap gap-1.5 mb-4 max-h-64 overflow-y-auto pr-1">
+            <div className="flex flex-wrap gap-1 mb-4 max-h-64 overflow-y-auto">
               {predictions.map((pred, i) => (
-                <motion.button
+                <button
                   key={i}
-                  whileTap={{ scale: 0.85 }}
                   onClick={() => togglePrediction(i)}
-                  className={`w-12 h-12 sm:w-10 sm:h-10 rounded-lg text-sm font-bold transition-all touch-manipulation ${
+                  className={`w-10 h-10 rounded text-xs font-bold transition-colors ${
                     pred
-                      ? 'bg-green-500 shadow-[0_0_12px_rgba(57,255,20,0.4)] text-black'
-                      : 'bg-red-500 shadow-[0_0_12px_rgba(255,23,68,0.4)] text-white'
+                      ? 'bg-green-500/20 text-green-500 border border-green-500/30'
+                      : 'bg-red-500/20 text-red-500 border border-red-500/30'
                   }`}
                 >
                   {pred ? '↑' : '↓'}
-                </motion.button>
+                </button>
               ))}
             </div>
           )}
 
-          <motion.button
-            whileTap={{ scale: 0.95 }}
+          <button
             onClick={handleCommit}
-            className="w-full py-4 rounded-xl font-display font-bold text-lg tracking-wider bg-gradient-to-r from-purple-600 to-blue-600 shadow-[0_0_25px_rgba(139,92,246,0.3)] hover:shadow-[0_0_35px_rgba(139,92,246,0.4)] transition-all"
+            disabled={committing}
+            className="w-full py-3 rounded text-sm font-bold bg-white text-black hover:bg-neutral-200 transition-colors disabled:opacity-50"
           >
-            ⚡ COMMIT PREDICTIONS
-          </motion.button>
+            {committing ? 'COMMITTING...' : 'COMMIT PREDICTIONS'}
+          </button>
         </>
       )}
 
       {committed && isActive && (
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="text-center py-8"
-        >
-          <div className="text-4xl mb-3 animate-heartbeat">✅</div>
-          <div className="font-display text-lg font-bold neon-text-green">COMMITTED!</div>
-          <div className="text-sm text-gray-400 mt-1">Waiting for arena to end...</div>
-        </motion.div>
+        <div className="text-center py-8">
+          <div className="text-sm font-bold text-green-500 mb-1">COMMITTED</div>
+          <div className="text-xs text-neutral-500">Waiting for arena to end...</div>
+        </div>
       )}
 
       {isEnded && (
         <div className="space-y-3">
-          <motion.button
-            whileTap={{ scale: 0.95 }}
+          <button
             onClick={handleReveal}
-            className="w-full py-4 rounded-xl font-display font-bold text-lg tracking-wider btn-neon-green"
+            disabled={revealing}
+            className="w-full py-3 rounded text-sm font-bold bg-white text-black hover:bg-neutral-200 transition-colors disabled:opacity-50"
           >
-            🎯 REVEAL & CLAIM
-          </motion.button>
-          {onShare && (
-            <button
-              onClick={onShare}
-              className="w-full py-3 rounded-xl font-bold text-sm glass-card border border-purple-500/20 hover:bg-white/5 transition-all"
-            >
-              📤 Share Result
-            </button>
-          )}
+            {revealing ? 'REVEALING...' : 'REVEAL & CLAIM'}
+          </button>
         </div>
       )}
-    </motion.div>
+    </div>
   );
 }

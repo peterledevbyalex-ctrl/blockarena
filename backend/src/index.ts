@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import http from 'http';
 import { WebSocketServer } from 'ws';
 import { config } from './config';
 import { getDb } from './db/database';
@@ -31,12 +32,15 @@ async function main() {
   app.use('/referrals', referralsRouter);
   app.use('/tournaments', tournamentsRouter);
 
-  app.listen(config.port, () => {
+  // Create HTTP server and attach WebSocket to it (single port for Railway)
+  const server = http.createServer(app);
+
+  server.listen(config.port, () => {
     console.log(`[API] Listening on http://localhost:${config.port}`);
   });
 
-  // WebSocket server
-  const wss = new WebSocketServer({ port: config.wsPort });
+  // WebSocket server — shares the HTTP server
+  const wss = new WebSocketServer({ server });
   setWss(wss);
 
   wss.on('connection', (ws) => {
@@ -60,7 +64,7 @@ async function main() {
     });
   });
 
-  console.log(`[WS] Listening on ws://localhost:${config.wsPort}`);
+  console.log(`[WS] Attached to HTTP server on port ${config.port}`);
 
   // Start services
   const indexer = new EventIndexer();
