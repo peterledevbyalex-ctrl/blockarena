@@ -70,8 +70,8 @@ let publicConfig = ChainMap.fromArrayUnsafe([
       chain,
       {
         confirmedBlockThreshold: 200,
-        syncSource: Rpc({syncConfig: NetworkSources.getSyncConfig({})}),
-        startBlock: 0,
+        syncSource: HyperSync({endpointUrl: "https://megaeth-testnet2.hypersync.xyz"}),
+        startBlock: 11250000,
         contracts,
         lowercaseAddresses: false
       }
