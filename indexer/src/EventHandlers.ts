@@ -55,7 +55,7 @@ BlockArena.ArenaCreated.handler(async ({ event, context }) => {
     winnerCount: 0,
     bestScore: 0,
     totalPot: 0n,
-    createdAt: event.block.number,
+    createdAt: Number(event.block.number),
     finalizedAt: undefined,
     tournament_id: undefined,
   };
@@ -74,7 +74,7 @@ BlockArena.ArenaFinalized.handler(async ({ event, context }) => {
       isFinalized: true,
       winnerCount: Number(event.params.winnerCount),
       bestScore: Number(event.params.bestScore),
-      finalizedAt: event.block.number,
+      finalizedAt: Number(event.block.number),
     });
   }
 });
@@ -197,8 +197,8 @@ BlockArena.ReferralPaid.handler(async ({ event, context }) => {
     referrer_id: refAddr,
     player_id: playerAddr,
     amount: event.params.amount,
-    blockNumber: event.block.number,
-    timestamp: event.block.timestamp,
+    blockNumber: Number(event.block.number),
+    timestamp: Number(event.block.timestamp),
   };
   context.ReferralPayment.set(payment);
 
@@ -299,8 +299,8 @@ BlockArena.EmergencyWithdraw.handler(async ({ event, context }) => {
     player_id: event.params.player.toLowerCase(),
     amount: event.params.amount,
     eventType: "withdraw",
-    blockNumber: event.block.number,
-    timestamp: event.block.timestamp,
+    blockNumber: Number(event.block.number),
+    timestamp: Number(event.block.timestamp),
   };
   context.EmergencyEvent.set(ee);
 });
@@ -312,8 +312,8 @@ BlockArena.Paused.handler(async ({ event, context }) => {
     player_id: undefined,
     amount: undefined,
     eventType: "paused",
-    blockNumber: event.block.number,
-    timestamp: event.block.timestamp,
+    blockNumber: Number(event.block.number),
+    timestamp: Number(event.block.timestamp),
   };
   context.EmergencyEvent.set(ee);
 
@@ -328,8 +328,8 @@ BlockArena.Unpaused.handler(async ({ event, context }) => {
     player_id: undefined,
     amount: undefined,
     eventType: "unpaused",
-    blockNumber: event.block.number,
-    timestamp: event.block.timestamp,
+    blockNumber: Number(event.block.number),
+    timestamp: Number(event.block.timestamp),
   };
   context.EmergencyEvent.set(ee);
 
@@ -342,8 +342,8 @@ BlockArena.TreasuryWithdrawn.handler(async ({ event, context }) => {
     id: `${event.block.number}-${event.logIndex}`,
     to: event.params.to.toLowerCase(),
     amount: event.params.amount,
-    blockNumber: event.block.number,
-    timestamp: event.block.timestamp,
+    blockNumber: Number(event.block.number),
+    timestamp: Number(event.block.timestamp),
   };
   context.TreasuryWithdrawal.set(tw);
 });
