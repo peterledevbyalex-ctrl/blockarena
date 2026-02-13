@@ -1,0 +1,20 @@
+{
+  "network": "megaeth_testnet",
+  "chainId": 6343,
+  "rpc": "https://carrot.megaeth.com/rpc",
+  "explorer": "https://megaeth-testnet-v2.blockscout.com",
+  "deployer": "0xDb1714b8c7694Fd8d0CB3532d72bCEc4918470E2",
+  "deployedAt": "2026-02-13T08:02:00Z",
+  "contracts": {
+    "Diamond": "0xDe32993819Ca96eb08e8bE8b7D5A31585a17D033",
+    "DiamondCutFacet": "0xcCD7621E6CA4B44805b77459A629188118Ae5012",
+    "DiamondLoupeFacet": "0xe8452409487b1BF432c6bFfD052fB481C739Ea87",
+    "OwnershipFacet": "0x4a80088e9569730E206b7f8b67f480536a2e4cB9",
+    "ArenaFacet": "0x81b556766c96E8B91cBdDEbc9C99b321aE854cF3",
+    "OracleFacet": "0xa43896730a6dEE2F202a864C2eB37323c11c3359",
+    "TournamentFacet": "0xA922c00DAb2a0D4b853AABa0AD24243e5cD21F3F",
+    "FeeFacet": "0xED2dEE9b23A02c7D212aE39ddB730Df3F0709DB4",
+    "StreakFacet": "0x06946A8e20E386480B9D1F74480ed748A0ab2a78",
+    "EmergencyFacet": "0x05093A5aFf90C51DC60D0e748a7D4ebd0B3da35E"
+  }
+}
