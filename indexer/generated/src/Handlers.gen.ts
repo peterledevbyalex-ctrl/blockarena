@@ -1,0 +1,327 @@
+/* TypeScript file generated from Handlers.res by genType. */
+
+/* eslint-disable */
+/* tslint:disable */
+
+const HandlersJS = require('./Handlers.res.js');
+
+import type {BlockArena_ArenaCreated_eventFilters as Types_BlockArena_ArenaCreated_eventFilters} from './Types.gen';
+
+import type {BlockArena_ArenaCreated_event as Types_BlockArena_ArenaCreated_event} from './Types.gen';
+
+import type {BlockArena_ArenaFinalized_eventFilters as Types_BlockArena_ArenaFinalized_eventFilters} from './Types.gen';
+
+import type {BlockArena_ArenaFinalized_event as Types_BlockArena_ArenaFinalized_event} from './Types.gen';
+
+import type {BlockArena_ArenaReset_eventFilters as Types_BlockArena_ArenaReset_eventFilters} from './Types.gen';
+
+import type {BlockArena_ArenaReset_event as Types_BlockArena_ArenaReset_event} from './Types.gen';
+
+import type {BlockArena_BotDetected_eventFilters as Types_BlockArena_BotDetected_eventFilters} from './Types.gen';
+
+import type {BlockArena_BotDetected_event as Types_BlockArena_BotDetected_event} from './Types.gen';
+
+import type {BlockArena_EmergencyWithdraw_eventFilters as Types_BlockArena_EmergencyWithdraw_eventFilters} from './Types.gen';
+
+import type {BlockArena_EmergencyWithdraw_event as Types_BlockArena_EmergencyWithdraw_event} from './Types.gen';
+
+import type {BlockArena_GodStreakUpdate_eventFilters as Types_BlockArena_GodStreakUpdate_eventFilters} from './Types.gen';
+
+import type {BlockArena_GodStreakUpdate_event as Types_BlockArena_GodStreakUpdate_event} from './Types.gen';
+
+import type {BlockArena_Paused_eventFilters as Types_BlockArena_Paused_eventFilters} from './Types.gen';
+
+import type {BlockArena_Paused_event as Types_BlockArena_Paused_event} from './Types.gen';
+
+import type {BlockArena_PlayerJoined_eventFilters as Types_BlockArena_PlayerJoined_eventFilters} from './Types.gen';
+
+import type {BlockArena_PlayerJoined_event as Types_BlockArena_PlayerJoined_event} from './Types.gen';
+
+import type {BlockArena_PotDistributed_eventFilters as Types_BlockArena_PotDistributed_eventFilters} from './Types.gen';
+
+import type {BlockArena_PotDistributed_event as Types_BlockArena_PotDistributed_event} from './Types.gen';
+
+import type {BlockArena_PredictionCommitted_eventFilters as Types_BlockArena_PredictionCommitted_eventFilters} from './Types.gen';
+
+import type {BlockArena_PredictionCommitted_event as Types_BlockArena_PredictionCommitted_event} from './Types.gen';
+
+import type {BlockArena_PredictionRevealed_eventFilters as Types_BlockArena_PredictionRevealed_eventFilters} from './Types.gen';
+
+import type {BlockArena_PredictionRevealed_event as Types_BlockArena_PredictionRevealed_event} from './Types.gen';
+
+import type {BlockArena_ReferralPaid_eventFilters as Types_BlockArena_ReferralPaid_eventFilters} from './Types.gen';
+
+import type {BlockArena_ReferralPaid_event as Types_BlockArena_ReferralPaid_event} from './Types.gen';
+
+import type {BlockArena_ReferrerSet_eventFilters as Types_BlockArena_ReferrerSet_eventFilters} from './Types.gen';
+
+import type {BlockArena_ReferrerSet_event as Types_BlockArena_ReferrerSet_event} from './Types.gen';
+
+import type {BlockArena_TournamentArenaAdded_eventFilters as Types_BlockArena_TournamentArenaAdded_eventFilters} from './Types.gen';
+
+import type {BlockArena_TournamentArenaAdded_event as Types_BlockArena_TournamentArenaAdded_event} from './Types.gen';
+
+import type {BlockArena_TournamentCreated_eventFilters as Types_BlockArena_TournamentCreated_eventFilters} from './Types.gen';
+
+import type {BlockArena_TournamentCreated_event as Types_BlockArena_TournamentCreated_event} from './Types.gen';
+
+import type {BlockArena_TournamentFinalized_eventFilters as Types_BlockArena_TournamentFinalized_eventFilters} from './Types.gen';
+
+import type {BlockArena_TournamentFinalized_event as Types_BlockArena_TournamentFinalized_event} from './Types.gen';
+
+import type {BlockArena_TournamentPlayerQualified_eventFilters as Types_BlockArena_TournamentPlayerQualified_eventFilters} from './Types.gen';
+
+import type {BlockArena_TournamentPlayerQualified_event as Types_BlockArena_TournamentPlayerQualified_event} from './Types.gen';
+
+import type {BlockArena_TreasuryWithdrawn_eventFilters as Types_BlockArena_TreasuryWithdrawn_eventFilters} from './Types.gen';
+
+import type {BlockArena_TreasuryWithdrawn_event as Types_BlockArena_TreasuryWithdrawn_event} from './Types.gen';
+
+import type {BlockArena_Unpaused_eventFilters as Types_BlockArena_Unpaused_eventFilters} from './Types.gen';
+
+import type {BlockArena_Unpaused_event as Types_BlockArena_Unpaused_event} from './Types.gen';
+
+import type {HandlerTypes_eventConfig as Types_HandlerTypes_eventConfig} from './Types.gen';
+
+import type {chain as Types_chain} from './Types.gen';
+
+import type {contractRegistrations as Types_contractRegistrations} from './Types.gen';
+
+import type {fnWithEventConfig as Types_fnWithEventConfig} from './Types.gen';
+
+import type {genericContractRegisterArgs as Internal_genericContractRegisterArgs} from 'envio/src/Internal.gen';
+
+import type {genericContractRegister as Internal_genericContractRegister} from 'envio/src/Internal.gen';
+
+import type {genericHandlerArgs as Internal_genericHandlerArgs} from 'envio/src/Internal.gen';
+
+import type {genericHandlerWithLoader as Internal_genericHandlerWithLoader} from 'envio/src/Internal.gen';
+
+import type {genericHandler as Internal_genericHandler} from 'envio/src/Internal.gen';
+
+import type {genericLoaderArgs as Internal_genericLoaderArgs} from 'envio/src/Internal.gen';
+
+import type {genericLoader as Internal_genericLoader} from 'envio/src/Internal.gen';
+
+import type {handlerContext as Types_handlerContext} from './Types.gen';
+
+import type {loaderContext as Types_loaderContext} from './Types.gen';
+
+import type {onBlockArgs as Envio_onBlockArgs} from 'envio/src/Envio.gen';
+
+import type {onBlockOptions as Envio_onBlockOptions} from 'envio/src/Envio.gen';
+
+export const BlockArena_ArenaCreated_contractRegister: Types_fnWithEventConfig<Internal_genericContractRegister<Internal_genericContractRegisterArgs<Types_BlockArena_ArenaCreated_event,Types_contractRegistrations>>,Types_HandlerTypes_eventConfig<Types_BlockArena_ArenaCreated_eventFilters>> = HandlersJS.BlockArena.ArenaCreated.contractRegister as any;
+
+export const BlockArena_ArenaCreated_handler: Types_fnWithEventConfig<Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_ArenaCreated_event,Types_handlerContext,void>>,Types_HandlerTypes_eventConfig<Types_BlockArena_ArenaCreated_eventFilters>> = HandlersJS.BlockArena.ArenaCreated.handler as any;
+
+export const BlockArena_ArenaCreated_handlerWithLoader: <loaderReturn>(_1:Internal_genericHandlerWithLoader<Internal_genericLoader<Internal_genericLoaderArgs<Types_BlockArena_ArenaCreated_event,Types_loaderContext>,loaderReturn>,Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_ArenaCreated_event,Types_handlerContext,loaderReturn>>,Types_BlockArena_ArenaCreated_eventFilters>) => void = HandlersJS.BlockArena.ArenaCreated.handlerWithLoader as any;
+
+export const BlockArena_ArenaFinalized_contractRegister: Types_fnWithEventConfig<Internal_genericContractRegister<Internal_genericContractRegisterArgs<Types_BlockArena_ArenaFinalized_event,Types_contractRegistrations>>,Types_HandlerTypes_eventConfig<Types_BlockArena_ArenaFinalized_eventFilters>> = HandlersJS.BlockArena.ArenaFinalized.contractRegister as any;
+
+export const BlockArena_ArenaFinalized_handler: Types_fnWithEventConfig<Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_ArenaFinalized_event,Types_handlerContext,void>>,Types_HandlerTypes_eventConfig<Types_BlockArena_ArenaFinalized_eventFilters>> = HandlersJS.BlockArena.ArenaFinalized.handler as any;
+
+export const BlockArena_ArenaFinalized_handlerWithLoader: <loaderReturn>(_1:Internal_genericHandlerWithLoader<Internal_genericLoader<Internal_genericLoaderArgs<Types_BlockArena_ArenaFinalized_event,Types_loaderContext>,loaderReturn>,Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_ArenaFinalized_event,Types_handlerContext,loaderReturn>>,Types_BlockArena_ArenaFinalized_eventFilters>) => void = HandlersJS.BlockArena.ArenaFinalized.handlerWithLoader as any;
+
+export const BlockArena_ArenaReset_contractRegister: Types_fnWithEventConfig<Internal_genericContractRegister<Internal_genericContractRegisterArgs<Types_BlockArena_ArenaReset_event,Types_contractRegistrations>>,Types_HandlerTypes_eventConfig<Types_BlockArena_ArenaReset_eventFilters>> = HandlersJS.BlockArena.ArenaReset.contractRegister as any;
+
+export const BlockArena_ArenaReset_handler: Types_fnWithEventConfig<Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_ArenaReset_event,Types_handlerContext,void>>,Types_HandlerTypes_eventConfig<Types_BlockArena_ArenaReset_eventFilters>> = HandlersJS.BlockArena.ArenaReset.handler as any;
+
+export const BlockArena_ArenaReset_handlerWithLoader: <loaderReturn>(_1:Internal_genericHandlerWithLoader<Internal_genericLoader<Internal_genericLoaderArgs<Types_BlockArena_ArenaReset_event,Types_loaderContext>,loaderReturn>,Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_ArenaReset_event,Types_handlerContext,loaderReturn>>,Types_BlockArena_ArenaReset_eventFilters>) => void = HandlersJS.BlockArena.ArenaReset.handlerWithLoader as any;
+
+export const BlockArena_PlayerJoined_contractRegister: Types_fnWithEventConfig<Internal_genericContractRegister<Internal_genericContractRegisterArgs<Types_BlockArena_PlayerJoined_event,Types_contractRegistrations>>,Types_HandlerTypes_eventConfig<Types_BlockArena_PlayerJoined_eventFilters>> = HandlersJS.BlockArena.PlayerJoined.contractRegister as any;
+
+export const BlockArena_PlayerJoined_handler: Types_fnWithEventConfig<Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_PlayerJoined_event,Types_handlerContext,void>>,Types_HandlerTypes_eventConfig<Types_BlockArena_PlayerJoined_eventFilters>> = HandlersJS.BlockArena.PlayerJoined.handler as any;
+
+export const BlockArena_PlayerJoined_handlerWithLoader: <loaderReturn>(_1:Internal_genericHandlerWithLoader<Internal_genericLoader<Internal_genericLoaderArgs<Types_BlockArena_PlayerJoined_event,Types_loaderContext>,loaderReturn>,Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_PlayerJoined_event,Types_handlerContext,loaderReturn>>,Types_BlockArena_PlayerJoined_eventFilters>) => void = HandlersJS.BlockArena.PlayerJoined.handlerWithLoader as any;
+
+export const BlockArena_PredictionCommitted_contractRegister: Types_fnWithEventConfig<Internal_genericContractRegister<Internal_genericContractRegisterArgs<Types_BlockArena_PredictionCommitted_event,Types_contractRegistrations>>,Types_HandlerTypes_eventConfig<Types_BlockArena_PredictionCommitted_eventFilters>> = HandlersJS.BlockArena.PredictionCommitted.contractRegister as any;
+
+export const BlockArena_PredictionCommitted_handler: Types_fnWithEventConfig<Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_PredictionCommitted_event,Types_handlerContext,void>>,Types_HandlerTypes_eventConfig<Types_BlockArena_PredictionCommitted_eventFilters>> = HandlersJS.BlockArena.PredictionCommitted.handler as any;
+
+export const BlockArena_PredictionCommitted_handlerWithLoader: <loaderReturn>(_1:Internal_genericHandlerWithLoader<Internal_genericLoader<Internal_genericLoaderArgs<Types_BlockArena_PredictionCommitted_event,Types_loaderContext>,loaderReturn>,Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_PredictionCommitted_event,Types_handlerContext,loaderReturn>>,Types_BlockArena_PredictionCommitted_eventFilters>) => void = HandlersJS.BlockArena.PredictionCommitted.handlerWithLoader as any;
+
+export const BlockArena_PredictionRevealed_contractRegister: Types_fnWithEventConfig<Internal_genericContractRegister<Internal_genericContractRegisterArgs<Types_BlockArena_PredictionRevealed_event,Types_contractRegistrations>>,Types_HandlerTypes_eventConfig<Types_BlockArena_PredictionRevealed_eventFilters>> = HandlersJS.BlockArena.PredictionRevealed.contractRegister as any;
+
+export const BlockArena_PredictionRevealed_handler: Types_fnWithEventConfig<Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_PredictionRevealed_event,Types_handlerContext,void>>,Types_HandlerTypes_eventConfig<Types_BlockArena_PredictionRevealed_eventFilters>> = HandlersJS.BlockArena.PredictionRevealed.handler as any;
+
+export const BlockArena_PredictionRevealed_handlerWithLoader: <loaderReturn>(_1:Internal_genericHandlerWithLoader<Internal_genericLoader<Internal_genericLoaderArgs<Types_BlockArena_PredictionRevealed_event,Types_loaderContext>,loaderReturn>,Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_PredictionRevealed_event,Types_handlerContext,loaderReturn>>,Types_BlockArena_PredictionRevealed_eventFilters>) => void = HandlersJS.BlockArena.PredictionRevealed.handlerWithLoader as any;
+
+export const BlockArena_PotDistributed_contractRegister: Types_fnWithEventConfig<Internal_genericContractRegister<Internal_genericContractRegisterArgs<Types_BlockArena_PotDistributed_event,Types_contractRegistrations>>,Types_HandlerTypes_eventConfig<Types_BlockArena_PotDistributed_eventFilters>> = HandlersJS.BlockArena.PotDistributed.contractRegister as any;
+
+export const BlockArena_PotDistributed_handler: Types_fnWithEventConfig<Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_PotDistributed_event,Types_handlerContext,void>>,Types_HandlerTypes_eventConfig<Types_BlockArena_PotDistributed_eventFilters>> = HandlersJS.BlockArena.PotDistributed.handler as any;
+
+export const BlockArena_PotDistributed_handlerWithLoader: <loaderReturn>(_1:Internal_genericHandlerWithLoader<Internal_genericLoader<Internal_genericLoaderArgs<Types_BlockArena_PotDistributed_event,Types_loaderContext>,loaderReturn>,Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_PotDistributed_event,Types_handlerContext,loaderReturn>>,Types_BlockArena_PotDistributed_eventFilters>) => void = HandlersJS.BlockArena.PotDistributed.handlerWithLoader as any;
+
+export const BlockArena_ReferralPaid_contractRegister: Types_fnWithEventConfig<Internal_genericContractRegister<Internal_genericContractRegisterArgs<Types_BlockArena_ReferralPaid_event,Types_contractRegistrations>>,Types_HandlerTypes_eventConfig<Types_BlockArena_ReferralPaid_eventFilters>> = HandlersJS.BlockArena.ReferralPaid.contractRegister as any;
+
+export const BlockArena_ReferralPaid_handler: Types_fnWithEventConfig<Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_ReferralPaid_event,Types_handlerContext,void>>,Types_HandlerTypes_eventConfig<Types_BlockArena_ReferralPaid_eventFilters>> = HandlersJS.BlockArena.ReferralPaid.handler as any;
+
+export const BlockArena_ReferralPaid_handlerWithLoader: <loaderReturn>(_1:Internal_genericHandlerWithLoader<Internal_genericLoader<Internal_genericLoaderArgs<Types_BlockArena_ReferralPaid_event,Types_loaderContext>,loaderReturn>,Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_ReferralPaid_event,Types_handlerContext,loaderReturn>>,Types_BlockArena_ReferralPaid_eventFilters>) => void = HandlersJS.BlockArena.ReferralPaid.handlerWithLoader as any;
+
+export const BlockArena_ReferrerSet_contractRegister: Types_fnWithEventConfig<Internal_genericContractRegister<Internal_genericContractRegisterArgs<Types_BlockArena_ReferrerSet_event,Types_contractRegistrations>>,Types_HandlerTypes_eventConfig<Types_BlockArena_ReferrerSet_eventFilters>> = HandlersJS.BlockArena.ReferrerSet.contractRegister as any;
+
+export const BlockArena_ReferrerSet_handler: Types_fnWithEventConfig<Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_ReferrerSet_event,Types_handlerContext,void>>,Types_HandlerTypes_eventConfig<Types_BlockArena_ReferrerSet_eventFilters>> = HandlersJS.BlockArena.ReferrerSet.handler as any;
+
+export const BlockArena_ReferrerSet_handlerWithLoader: <loaderReturn>(_1:Internal_genericHandlerWithLoader<Internal_genericLoader<Internal_genericLoaderArgs<Types_BlockArena_ReferrerSet_event,Types_loaderContext>,loaderReturn>,Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_ReferrerSet_event,Types_handlerContext,loaderReturn>>,Types_BlockArena_ReferrerSet_eventFilters>) => void = HandlersJS.BlockArena.ReferrerSet.handlerWithLoader as any;
+
+export const BlockArena_GodStreakUpdate_contractRegister: Types_fnWithEventConfig<Internal_genericContractRegister<Internal_genericContractRegisterArgs<Types_BlockArena_GodStreakUpdate_event,Types_contractRegistrations>>,Types_HandlerTypes_eventConfig<Types_BlockArena_GodStreakUpdate_eventFilters>> = HandlersJS.BlockArena.GodStreakUpdate.contractRegister as any;
+
+export const BlockArena_GodStreakUpdate_handler: Types_fnWithEventConfig<Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_GodStreakUpdate_event,Types_handlerContext,void>>,Types_HandlerTypes_eventConfig<Types_BlockArena_GodStreakUpdate_eventFilters>> = HandlersJS.BlockArena.GodStreakUpdate.handler as any;
+
+export const BlockArena_GodStreakUpdate_handlerWithLoader: <loaderReturn>(_1:Internal_genericHandlerWithLoader<Internal_genericLoader<Internal_genericLoaderArgs<Types_BlockArena_GodStreakUpdate_event,Types_loaderContext>,loaderReturn>,Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_GodStreakUpdate_event,Types_handlerContext,loaderReturn>>,Types_BlockArena_GodStreakUpdate_eventFilters>) => void = HandlersJS.BlockArena.GodStreakUpdate.handlerWithLoader as any;
+
+export const BlockArena_BotDetected_contractRegister: Types_fnWithEventConfig<Internal_genericContractRegister<Internal_genericContractRegisterArgs<Types_BlockArena_BotDetected_event,Types_contractRegistrations>>,Types_HandlerTypes_eventConfig<Types_BlockArena_BotDetected_eventFilters>> = HandlersJS.BlockArena.BotDetected.contractRegister as any;
+
+export const BlockArena_BotDetected_handler: Types_fnWithEventConfig<Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_BotDetected_event,Types_handlerContext,void>>,Types_HandlerTypes_eventConfig<Types_BlockArena_BotDetected_eventFilters>> = HandlersJS.BlockArena.BotDetected.handler as any;
+
+export const BlockArena_BotDetected_handlerWithLoader: <loaderReturn>(_1:Internal_genericHandlerWithLoader<Internal_genericLoader<Internal_genericLoaderArgs<Types_BlockArena_BotDetected_event,Types_loaderContext>,loaderReturn>,Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_BotDetected_event,Types_handlerContext,loaderReturn>>,Types_BlockArena_BotDetected_eventFilters>) => void = HandlersJS.BlockArena.BotDetected.handlerWithLoader as any;
+
+export const BlockArena_TournamentCreated_contractRegister: Types_fnWithEventConfig<Internal_genericContractRegister<Internal_genericContractRegisterArgs<Types_BlockArena_TournamentCreated_event,Types_contractRegistrations>>,Types_HandlerTypes_eventConfig<Types_BlockArena_TournamentCreated_eventFilters>> = HandlersJS.BlockArena.TournamentCreated.contractRegister as any;
+
+export const BlockArena_TournamentCreated_handler: Types_fnWithEventConfig<Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_TournamentCreated_event,Types_handlerContext,void>>,Types_HandlerTypes_eventConfig<Types_BlockArena_TournamentCreated_eventFilters>> = HandlersJS.BlockArena.TournamentCreated.handler as any;
+
+export const BlockArena_TournamentCreated_handlerWithLoader: <loaderReturn>(_1:Internal_genericHandlerWithLoader<Internal_genericLoader<Internal_genericLoaderArgs<Types_BlockArena_TournamentCreated_event,Types_loaderContext>,loaderReturn>,Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_TournamentCreated_event,Types_handlerContext,loaderReturn>>,Types_BlockArena_TournamentCreated_eventFilters>) => void = HandlersJS.BlockArena.TournamentCreated.handlerWithLoader as any;
+
+export const BlockArena_TournamentFinalized_contractRegister: Types_fnWithEventConfig<Internal_genericContractRegister<Internal_genericContractRegisterArgs<Types_BlockArena_TournamentFinalized_event,Types_contractRegistrations>>,Types_HandlerTypes_eventConfig<Types_BlockArena_TournamentFinalized_eventFilters>> = HandlersJS.BlockArena.TournamentFinalized.contractRegister as any;
+
+export const BlockArena_TournamentFinalized_handler: Types_fnWithEventConfig<Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_TournamentFinalized_event,Types_handlerContext,void>>,Types_HandlerTypes_eventConfig<Types_BlockArena_TournamentFinalized_eventFilters>> = HandlersJS.BlockArena.TournamentFinalized.handler as any;
+
+export const BlockArena_TournamentFinalized_handlerWithLoader: <loaderReturn>(_1:Internal_genericHandlerWithLoader<Internal_genericLoader<Internal_genericLoaderArgs<Types_BlockArena_TournamentFinalized_event,Types_loaderContext>,loaderReturn>,Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_TournamentFinalized_event,Types_handlerContext,loaderReturn>>,Types_BlockArena_TournamentFinalized_eventFilters>) => void = HandlersJS.BlockArena.TournamentFinalized.handlerWithLoader as any;
+
+export const BlockArena_TournamentArenaAdded_contractRegister: Types_fnWithEventConfig<Internal_genericContractRegister<Internal_genericContractRegisterArgs<Types_BlockArena_TournamentArenaAdded_event,Types_contractRegistrations>>,Types_HandlerTypes_eventConfig<Types_BlockArena_TournamentArenaAdded_eventFilters>> = HandlersJS.BlockArena.TournamentArenaAdded.contractRegister as any;
+
+export const BlockArena_TournamentArenaAdded_handler: Types_fnWithEventConfig<Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_TournamentArenaAdded_event,Types_handlerContext,void>>,Types_HandlerTypes_eventConfig<Types_BlockArena_TournamentArenaAdded_eventFilters>> = HandlersJS.BlockArena.TournamentArenaAdded.handler as any;
+
+export const BlockArena_TournamentArenaAdded_handlerWithLoader: <loaderReturn>(_1:Internal_genericHandlerWithLoader<Internal_genericLoader<Internal_genericLoaderArgs<Types_BlockArena_TournamentArenaAdded_event,Types_loaderContext>,loaderReturn>,Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_TournamentArenaAdded_event,Types_handlerContext,loaderReturn>>,Types_BlockArena_TournamentArenaAdded_eventFilters>) => void = HandlersJS.BlockArena.TournamentArenaAdded.handlerWithLoader as any;
+
+export const BlockArena_TournamentPlayerQualified_contractRegister: Types_fnWithEventConfig<Internal_genericContractRegister<Internal_genericContractRegisterArgs<Types_BlockArena_TournamentPlayerQualified_event,Types_contractRegistrations>>,Types_HandlerTypes_eventConfig<Types_BlockArena_TournamentPlayerQualified_eventFilters>> = HandlersJS.BlockArena.TournamentPlayerQualified.contractRegister as any;
+
+export const BlockArena_TournamentPlayerQualified_handler: Types_fnWithEventConfig<Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_TournamentPlayerQualified_event,Types_handlerContext,void>>,Types_HandlerTypes_eventConfig<Types_BlockArena_TournamentPlayerQualified_eventFilters>> = HandlersJS.BlockArena.TournamentPlayerQualified.handler as any;
+
+export const BlockArena_TournamentPlayerQualified_handlerWithLoader: <loaderReturn>(_1:Internal_genericHandlerWithLoader<Internal_genericLoader<Internal_genericLoaderArgs<Types_BlockArena_TournamentPlayerQualified_event,Types_loaderContext>,loaderReturn>,Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_TournamentPlayerQualified_event,Types_handlerContext,loaderReturn>>,Types_BlockArena_TournamentPlayerQualified_eventFilters>) => void = HandlersJS.BlockArena.TournamentPlayerQualified.handlerWithLoader as any;
+
+export const BlockArena_EmergencyWithdraw_contractRegister: Types_fnWithEventConfig<Internal_genericContractRegister<Internal_genericContractRegisterArgs<Types_BlockArena_EmergencyWithdraw_event,Types_contractRegistrations>>,Types_HandlerTypes_eventConfig<Types_BlockArena_EmergencyWithdraw_eventFilters>> = HandlersJS.BlockArena.EmergencyWithdraw.contractRegister as any;
+
+export const BlockArena_EmergencyWithdraw_handler: Types_fnWithEventConfig<Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_EmergencyWithdraw_event,Types_handlerContext,void>>,Types_HandlerTypes_eventConfig<Types_BlockArena_EmergencyWithdraw_eventFilters>> = HandlersJS.BlockArena.EmergencyWithdraw.handler as any;
+
+export const BlockArena_EmergencyWithdraw_handlerWithLoader: <loaderReturn>(_1:Internal_genericHandlerWithLoader<Internal_genericLoader<Internal_genericLoaderArgs<Types_BlockArena_EmergencyWithdraw_event,Types_loaderContext>,loaderReturn>,Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_EmergencyWithdraw_event,Types_handlerContext,loaderReturn>>,Types_BlockArena_EmergencyWithdraw_eventFilters>) => void = HandlersJS.BlockArena.EmergencyWithdraw.handlerWithLoader as any;
+
+export const BlockArena_TreasuryWithdrawn_contractRegister: Types_fnWithEventConfig<Internal_genericContractRegister<Internal_genericContractRegisterArgs<Types_BlockArena_TreasuryWithdrawn_event,Types_contractRegistrations>>,Types_HandlerTypes_eventConfig<Types_BlockArena_TreasuryWithdrawn_eventFilters>> = HandlersJS.BlockArena.TreasuryWithdrawn.contractRegister as any;
+
+export const BlockArena_TreasuryWithdrawn_handler: Types_fnWithEventConfig<Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_TreasuryWithdrawn_event,Types_handlerContext,void>>,Types_HandlerTypes_eventConfig<Types_BlockArena_TreasuryWithdrawn_eventFilters>> = HandlersJS.BlockArena.TreasuryWithdrawn.handler as any;
+
+export const BlockArena_TreasuryWithdrawn_handlerWithLoader: <loaderReturn>(_1:Internal_genericHandlerWithLoader<Internal_genericLoader<Internal_genericLoaderArgs<Types_BlockArena_TreasuryWithdrawn_event,Types_loaderContext>,loaderReturn>,Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_TreasuryWithdrawn_event,Types_handlerContext,loaderReturn>>,Types_BlockArena_TreasuryWithdrawn_eventFilters>) => void = HandlersJS.BlockArena.TreasuryWithdrawn.handlerWithLoader as any;
+
+export const BlockArena_Paused_contractRegister: Types_fnWithEventConfig<Internal_genericContractRegister<Internal_genericContractRegisterArgs<Types_BlockArena_Paused_event,Types_contractRegistrations>>,Types_HandlerTypes_eventConfig<Types_BlockArena_Paused_eventFilters>> = HandlersJS.BlockArena.Paused.contractRegister as any;
+
+export const BlockArena_Paused_handler: Types_fnWithEventConfig<Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_Paused_event,Types_handlerContext,void>>,Types_HandlerTypes_eventConfig<Types_BlockArena_Paused_eventFilters>> = HandlersJS.BlockArena.Paused.handler as any;
+
+export const BlockArena_Paused_handlerWithLoader: <loaderReturn>(_1:Internal_genericHandlerWithLoader<Internal_genericLoader<Internal_genericLoaderArgs<Types_BlockArena_Paused_event,Types_loaderContext>,loaderReturn>,Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_Paused_event,Types_handlerContext,loaderReturn>>,Types_BlockArena_Paused_eventFilters>) => void = HandlersJS.BlockArena.Paused.handlerWithLoader as any;
+
+export const BlockArena_Unpaused_contractRegister: Types_fnWithEventConfig<Internal_genericContractRegister<Internal_genericContractRegisterArgs<Types_BlockArena_Unpaused_event,Types_contractRegistrations>>,Types_HandlerTypes_eventConfig<Types_BlockArena_Unpaused_eventFilters>> = HandlersJS.BlockArena.Unpaused.contractRegister as any;
+
+export const BlockArena_Unpaused_handler: Types_fnWithEventConfig<Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_Unpaused_event,Types_handlerContext,void>>,Types_HandlerTypes_eventConfig<Types_BlockArena_Unpaused_eventFilters>> = HandlersJS.BlockArena.Unpaused.handler as any;
+
+export const BlockArena_Unpaused_handlerWithLoader: <loaderReturn>(_1:Internal_genericHandlerWithLoader<Internal_genericLoader<Internal_genericLoaderArgs<Types_BlockArena_Unpaused_event,Types_loaderContext>,loaderReturn>,Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_Unpaused_event,Types_handlerContext,loaderReturn>>,Types_BlockArena_Unpaused_eventFilters>) => void = HandlersJS.BlockArena.Unpaused.handlerWithLoader as any;
+
+/** Register a Block Handler. It'll be called for every block by default. */
+export const onBlock: (_1:Envio_onBlockOptions<Types_chain>, _2:((_1:Envio_onBlockArgs<Types_handlerContext>) => Promise<void>)) => void = HandlersJS.onBlock as any;
+
+export const BlockArena: {
+  ReferralPaid: {
+    handlerWithLoader: <loaderReturn>(_1:Internal_genericHandlerWithLoader<Internal_genericLoader<Internal_genericLoaderArgs<Types_BlockArena_ReferralPaid_event,Types_loaderContext>,loaderReturn>,Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_ReferralPaid_event,Types_handlerContext,loaderReturn>>,Types_BlockArena_ReferralPaid_eventFilters>) => void; 
+    handler: Types_fnWithEventConfig<Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_ReferralPaid_event,Types_handlerContext,void>>,Types_HandlerTypes_eventConfig<Types_BlockArena_ReferralPaid_eventFilters>>; 
+    contractRegister: Types_fnWithEventConfig<Internal_genericContractRegister<Internal_genericContractRegisterArgs<Types_BlockArena_ReferralPaid_event,Types_contractRegistrations>>,Types_HandlerTypes_eventConfig<Types_BlockArena_ReferralPaid_eventFilters>>
+  }; 
+  TournamentPlayerQualified: {
+    handlerWithLoader: <loaderReturn>(_1:Internal_genericHandlerWithLoader<Internal_genericLoader<Internal_genericLoaderArgs<Types_BlockArena_TournamentPlayerQualified_event,Types_loaderContext>,loaderReturn>,Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_TournamentPlayerQualified_event,Types_handlerContext,loaderReturn>>,Types_BlockArena_TournamentPlayerQualified_eventFilters>) => void; 
+    handler: Types_fnWithEventConfig<Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_TournamentPlayerQualified_event,Types_handlerContext,void>>,Types_HandlerTypes_eventConfig<Types_BlockArena_TournamentPlayerQualified_eventFilters>>; 
+    contractRegister: Types_fnWithEventConfig<Internal_genericContractRegister<Internal_genericContractRegisterArgs<Types_BlockArena_TournamentPlayerQualified_event,Types_contractRegistrations>>,Types_HandlerTypes_eventConfig<Types_BlockArena_TournamentPlayerQualified_eventFilters>>
+  }; 
+  Unpaused: {
+    handlerWithLoader: <loaderReturn>(_1:Internal_genericHandlerWithLoader<Internal_genericLoader<Internal_genericLoaderArgs<Types_BlockArena_Unpaused_event,Types_loaderContext>,loaderReturn>,Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_Unpaused_event,Types_handlerContext,loaderReturn>>,Types_BlockArena_Unpaused_eventFilters>) => void; 
+    handler: Types_fnWithEventConfig<Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_Unpaused_event,Types_handlerContext,void>>,Types_HandlerTypes_eventConfig<Types_BlockArena_Unpaused_eventFilters>>; 
+    contractRegister: Types_fnWithEventConfig<Internal_genericContractRegister<Internal_genericContractRegisterArgs<Types_BlockArena_Unpaused_event,Types_contractRegistrations>>,Types_HandlerTypes_eventConfig<Types_BlockArena_Unpaused_eventFilters>>
+  }; 
+  PlayerJoined: {
+    handlerWithLoader: <loaderReturn>(_1:Internal_genericHandlerWithLoader<Internal_genericLoader<Internal_genericLoaderArgs<Types_BlockArena_PlayerJoined_event,Types_loaderContext>,loaderReturn>,Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_PlayerJoined_event,Types_handlerContext,loaderReturn>>,Types_BlockArena_PlayerJoined_eventFilters>) => void; 
+    handler: Types_fnWithEventConfig<Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_PlayerJoined_event,Types_handlerContext,void>>,Types_HandlerTypes_eventConfig<Types_BlockArena_PlayerJoined_eventFilters>>; 
+    contractRegister: Types_fnWithEventConfig<Internal_genericContractRegister<Internal_genericContractRegisterArgs<Types_BlockArena_PlayerJoined_event,Types_contractRegistrations>>,Types_HandlerTypes_eventConfig<Types_BlockArena_PlayerJoined_eventFilters>>
+  }; 
+  BotDetected: {
+    handlerWithLoader: <loaderReturn>(_1:Internal_genericHandlerWithLoader<Internal_genericLoader<Internal_genericLoaderArgs<Types_BlockArena_BotDetected_event,Types_loaderContext>,loaderReturn>,Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_BotDetected_event,Types_handlerContext,loaderReturn>>,Types_BlockArena_BotDetected_eventFilters>) => void; 
+    handler: Types_fnWithEventConfig<Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_BotDetected_event,Types_handlerContext,void>>,Types_HandlerTypes_eventConfig<Types_BlockArena_BotDetected_eventFilters>>; 
+    contractRegister: Types_fnWithEventConfig<Internal_genericContractRegister<Internal_genericContractRegisterArgs<Types_BlockArena_BotDetected_event,Types_contractRegistrations>>,Types_HandlerTypes_eventConfig<Types_BlockArena_BotDetected_eventFilters>>
+  }; 
+  TournamentCreated: {
+    handlerWithLoader: <loaderReturn>(_1:Internal_genericHandlerWithLoader<Internal_genericLoader<Internal_genericLoaderArgs<Types_BlockArena_TournamentCreated_event,Types_loaderContext>,loaderReturn>,Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_TournamentCreated_event,Types_handlerContext,loaderReturn>>,Types_BlockArena_TournamentCreated_eventFilters>) => void; 
+    handler: Types_fnWithEventConfig<Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_TournamentCreated_event,Types_handlerContext,void>>,Types_HandlerTypes_eventConfig<Types_BlockArena_TournamentCreated_eventFilters>>; 
+    contractRegister: Types_fnWithEventConfig<Internal_genericContractRegister<Internal_genericContractRegisterArgs<Types_BlockArena_TournamentCreated_event,Types_contractRegistrations>>,Types_HandlerTypes_eventConfig<Types_BlockArena_TournamentCreated_eventFilters>>
+  }; 
+  TournamentArenaAdded: {
+    handlerWithLoader: <loaderReturn>(_1:Internal_genericHandlerWithLoader<Internal_genericLoader<Internal_genericLoaderArgs<Types_BlockArena_TournamentArenaAdded_event,Types_loaderContext>,loaderReturn>,Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_TournamentArenaAdded_event,Types_handlerContext,loaderReturn>>,Types_BlockArena_TournamentArenaAdded_eventFilters>) => void; 
+    handler: Types_fnWithEventConfig<Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_TournamentArenaAdded_event,Types_handlerContext,void>>,Types_HandlerTypes_eventConfig<Types_BlockArena_TournamentArenaAdded_eventFilters>>; 
+    contractRegister: Types_fnWithEventConfig<Internal_genericContractRegister<Internal_genericContractRegisterArgs<Types_BlockArena_TournamentArenaAdded_event,Types_contractRegistrations>>,Types_HandlerTypes_eventConfig<Types_BlockArena_TournamentArenaAdded_eventFilters>>
+  }; 
+  PredictionCommitted: {
+    handlerWithLoader: <loaderReturn>(_1:Internal_genericHandlerWithLoader<Internal_genericLoader<Internal_genericLoaderArgs<Types_BlockArena_PredictionCommitted_event,Types_loaderContext>,loaderReturn>,Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_PredictionCommitted_event,Types_handlerContext,loaderReturn>>,Types_BlockArena_PredictionCommitted_eventFilters>) => void; 
+    handler: Types_fnWithEventConfig<Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_PredictionCommitted_event,Types_handlerContext,void>>,Types_HandlerTypes_eventConfig<Types_BlockArena_PredictionCommitted_eventFilters>>; 
+    contractRegister: Types_fnWithEventConfig<Internal_genericContractRegister<Internal_genericContractRegisterArgs<Types_BlockArena_PredictionCommitted_event,Types_contractRegistrations>>,Types_HandlerTypes_eventConfig<Types_BlockArena_PredictionCommitted_eventFilters>>
+  }; 
+  ArenaCreated: {
+    handlerWithLoader: <loaderReturn>(_1:Internal_genericHandlerWithLoader<Internal_genericLoader<Internal_genericLoaderArgs<Types_BlockArena_ArenaCreated_event,Types_loaderContext>,loaderReturn>,Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_ArenaCreated_event,Types_handlerContext,loaderReturn>>,Types_BlockArena_ArenaCreated_eventFilters>) => void; 
+    handler: Types_fnWithEventConfig<Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_ArenaCreated_event,Types_handlerContext,void>>,Types_HandlerTypes_eventConfig<Types_BlockArena_ArenaCreated_eventFilters>>; 
+    contractRegister: Types_fnWithEventConfig<Internal_genericContractRegister<Internal_genericContractRegisterArgs<Types_BlockArena_ArenaCreated_event,Types_contractRegistrations>>,Types_HandlerTypes_eventConfig<Types_BlockArena_ArenaCreated_eventFilters>>
+  }; 
+  ArenaFinalized: {
+    handlerWithLoader: <loaderReturn>(_1:Internal_genericHandlerWithLoader<Internal_genericLoader<Internal_genericLoaderArgs<Types_BlockArena_ArenaFinalized_event,Types_loaderContext>,loaderReturn>,Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_ArenaFinalized_event,Types_handlerContext,loaderReturn>>,Types_BlockArena_ArenaFinalized_eventFilters>) => void; 
+    handler: Types_fnWithEventConfig<Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_ArenaFinalized_event,Types_handlerContext,void>>,Types_HandlerTypes_eventConfig<Types_BlockArena_ArenaFinalized_eventFilters>>; 
+    contractRegister: Types_fnWithEventConfig<Internal_genericContractRegister<Internal_genericContractRegisterArgs<Types_BlockArena_ArenaFinalized_event,Types_contractRegistrations>>,Types_HandlerTypes_eventConfig<Types_BlockArena_ArenaFinalized_eventFilters>>
+  }; 
+  ReferrerSet: {
+    handlerWithLoader: <loaderReturn>(_1:Internal_genericHandlerWithLoader<Internal_genericLoader<Internal_genericLoaderArgs<Types_BlockArena_ReferrerSet_event,Types_loaderContext>,loaderReturn>,Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_ReferrerSet_event,Types_handlerContext,loaderReturn>>,Types_BlockArena_ReferrerSet_eventFilters>) => void; 
+    handler: Types_fnWithEventConfig<Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_ReferrerSet_event,Types_handlerContext,void>>,Types_HandlerTypes_eventConfig<Types_BlockArena_ReferrerSet_eventFilters>>; 
+    contractRegister: Types_fnWithEventConfig<Internal_genericContractRegister<Internal_genericContractRegisterArgs<Types_BlockArena_ReferrerSet_event,Types_contractRegistrations>>,Types_HandlerTypes_eventConfig<Types_BlockArena_ReferrerSet_eventFilters>>
+  }; 
+  TournamentFinalized: {
+    handlerWithLoader: <loaderReturn>(_1:Internal_genericHandlerWithLoader<Internal_genericLoader<Internal_genericLoaderArgs<Types_BlockArena_TournamentFinalized_event,Types_loaderContext>,loaderReturn>,Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_TournamentFinalized_event,Types_handlerContext,loaderReturn>>,Types_BlockArena_TournamentFinalized_eventFilters>) => void; 
+    handler: Types_fnWithEventConfig<Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_TournamentFinalized_event,Types_handlerContext,void>>,Types_HandlerTypes_eventConfig<Types_BlockArena_TournamentFinalized_eventFilters>>; 
+    contractRegister: Types_fnWithEventConfig<Internal_genericContractRegister<Internal_genericContractRegisterArgs<Types_BlockArena_TournamentFinalized_event,Types_contractRegistrations>>,Types_HandlerTypes_eventConfig<Types_BlockArena_TournamentFinalized_eventFilters>>
+  }; 
+  PredictionRevealed: {
+    handlerWithLoader: <loaderReturn>(_1:Internal_genericHandlerWithLoader<Internal_genericLoader<Internal_genericLoaderArgs<Types_BlockArena_PredictionRevealed_event,Types_loaderContext>,loaderReturn>,Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_PredictionRevealed_event,Types_handlerContext,loaderReturn>>,Types_BlockArena_PredictionRevealed_eventFilters>) => void; 
+    handler: Types_fnWithEventConfig<Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_PredictionRevealed_event,Types_handlerContext,void>>,Types_HandlerTypes_eventConfig<Types_BlockArena_PredictionRevealed_eventFilters>>; 
+    contractRegister: Types_fnWithEventConfig<Internal_genericContractRegister<Internal_genericContractRegisterArgs<Types_BlockArena_PredictionRevealed_event,Types_contractRegistrations>>,Types_HandlerTypes_eventConfig<Types_BlockArena_PredictionRevealed_eventFilters>>
+  }; 
+  ArenaReset: {
+    handlerWithLoader: <loaderReturn>(_1:Internal_genericHandlerWithLoader<Internal_genericLoader<Internal_genericLoaderArgs<Types_BlockArena_ArenaReset_event,Types_loaderContext>,loaderReturn>,Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_ArenaReset_event,Types_handlerContext,loaderReturn>>,Types_BlockArena_ArenaReset_eventFilters>) => void; 
+    handler: Types_fnWithEventConfig<Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_ArenaReset_event,Types_handlerContext,void>>,Types_HandlerTypes_eventConfig<Types_BlockArena_ArenaReset_eventFilters>>; 
+    contractRegister: Types_fnWithEventConfig<Internal_genericContractRegister<Internal_genericContractRegisterArgs<Types_BlockArena_ArenaReset_event,Types_contractRegistrations>>,Types_HandlerTypes_eventConfig<Types_BlockArena_ArenaReset_eventFilters>>
+  }; 
+  GodStreakUpdate: {
+    handlerWithLoader: <loaderReturn>(_1:Internal_genericHandlerWithLoader<Internal_genericLoader<Internal_genericLoaderArgs<Types_BlockArena_GodStreakUpdate_event,Types_loaderContext>,loaderReturn>,Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_GodStreakUpdate_event,Types_handlerContext,loaderReturn>>,Types_BlockArena_GodStreakUpdate_eventFilters>) => void; 
+    handler: Types_fnWithEventConfig<Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_GodStreakUpdate_event,Types_handlerContext,void>>,Types_HandlerTypes_eventConfig<Types_BlockArena_GodStreakUpdate_eventFilters>>; 
+    contractRegister: Types_fnWithEventConfig<Internal_genericContractRegister<Internal_genericContractRegisterArgs<Types_BlockArena_GodStreakUpdate_event,Types_contractRegistrations>>,Types_HandlerTypes_eventConfig<Types_BlockArena_GodStreakUpdate_eventFilters>>
+  }; 
+  EmergencyWithdraw: {
+    handlerWithLoader: <loaderReturn>(_1:Internal_genericHandlerWithLoader<Internal_genericLoader<Internal_genericLoaderArgs<Types_BlockArena_EmergencyWithdraw_event,Types_loaderContext>,loaderReturn>,Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_EmergencyWithdraw_event,Types_handlerContext,loaderReturn>>,Types_BlockArena_EmergencyWithdraw_eventFilters>) => void; 
+    handler: Types_fnWithEventConfig<Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_EmergencyWithdraw_event,Types_handlerContext,void>>,Types_HandlerTypes_eventConfig<Types_BlockArena_EmergencyWithdraw_eventFilters>>; 
+    contractRegister: Types_fnWithEventConfig<Internal_genericContractRegister<Internal_genericContractRegisterArgs<Types_BlockArena_EmergencyWithdraw_event,Types_contractRegistrations>>,Types_HandlerTypes_eventConfig<Types_BlockArena_EmergencyWithdraw_eventFilters>>
+  }; 
+  Paused: {
+    handlerWithLoader: <loaderReturn>(_1:Internal_genericHandlerWithLoader<Internal_genericLoader<Internal_genericLoaderArgs<Types_BlockArena_Paused_event,Types_loaderContext>,loaderReturn>,Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_Paused_event,Types_handlerContext,loaderReturn>>,Types_BlockArena_Paused_eventFilters>) => void; 
+    handler: Types_fnWithEventConfig<Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_Paused_event,Types_handlerContext,void>>,Types_HandlerTypes_eventConfig<Types_BlockArena_Paused_eventFilters>>; 
+    contractRegister: Types_fnWithEventConfig<Internal_genericContractRegister<Internal_genericContractRegisterArgs<Types_BlockArena_Paused_event,Types_contractRegistrations>>,Types_HandlerTypes_eventConfig<Types_BlockArena_Paused_eventFilters>>
+  }; 
+  TreasuryWithdrawn: {
+    handlerWithLoader: <loaderReturn>(_1:Internal_genericHandlerWithLoader<Internal_genericLoader<Internal_genericLoaderArgs<Types_BlockArena_TreasuryWithdrawn_event,Types_loaderContext>,loaderReturn>,Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_TreasuryWithdrawn_event,Types_handlerContext,loaderReturn>>,Types_BlockArena_TreasuryWithdrawn_eventFilters>) => void; 
+    handler: Types_fnWithEventConfig<Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_TreasuryWithdrawn_event,Types_handlerContext,void>>,Types_HandlerTypes_eventConfig<Types_BlockArena_TreasuryWithdrawn_eventFilters>>; 
+    contractRegister: Types_fnWithEventConfig<Internal_genericContractRegister<Internal_genericContractRegisterArgs<Types_BlockArena_TreasuryWithdrawn_event,Types_contractRegistrations>>,Types_HandlerTypes_eventConfig<Types_BlockArena_TreasuryWithdrawn_eventFilters>>
+  }; 
+  PotDistributed: {
+    handlerWithLoader: <loaderReturn>(_1:Internal_genericHandlerWithLoader<Internal_genericLoader<Internal_genericLoaderArgs<Types_BlockArena_PotDistributed_event,Types_loaderContext>,loaderReturn>,Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_PotDistributed_event,Types_handlerContext,loaderReturn>>,Types_BlockArena_PotDistributed_eventFilters>) => void; 
+    handler: Types_fnWithEventConfig<Internal_genericHandler<Internal_genericHandlerArgs<Types_BlockArena_PotDistributed_event,Types_handlerContext,void>>,Types_HandlerTypes_eventConfig<Types_BlockArena_PotDistributed_eventFilters>>; 
+    contractRegister: Types_fnWithEventConfig<Internal_genericContractRegister<Internal_genericContractRegisterArgs<Types_BlockArena_PotDistributed_event,Types_contractRegistrations>>,Types_HandlerTypes_eventConfig<Types_BlockArena_PotDistributed_eventFilters>>
+  }
+} = HandlersJS.BlockArena as any;

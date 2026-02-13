@@ -1,0 +1,98 @@
+# ─── Core Entities ───
+
+type Arena {
+  id: ID! # arenaId
+  tier: Int!
+  entryFee: BigInt!
+  startBlock: Int!
+  endBlock: Int!
+  epoch: Int!
+  playerCount: Int!
+  isFinalized: Boolean!
+  winnerCount: Int!
+  bestScore: Int!
+  totalPot: BigInt!
+  createdAt: Int! # block number
+  finalizedAt: Int
+  tournament: Tournament
+}
+
+type Player {
+  id: ID! # address
+  totalArenas: Int!
+  totalWins: Int!
+  totalEarnings: BigInt!
+  godStreak: Int!
+  referrer: Player
+  referralEarnings: BigInt!
+  isFlagged: Boolean!
+}
+
+type ArenaEntry {
+  id: ID! # arenaId-player
+  arena: Arena!
+  player: Player!
+  committed: Boolean!
+  revealed: Boolean!
+  wonAmount: BigInt!
+}
+
+type ReferralPayment {
+  id: ID! # txHash-logIndex
+  referrer: Player!
+  player: Player!
+  amount: BigInt!
+  blockNumber: Int!
+  timestamp: Int!
+}
+
+type Tournament {
+  id: ID! # tournamentId
+  tier: Int!
+  roundCount: Int!
+  arenasPerRound: Int!
+  isFinalized: Boolean!
+  arenas: [TournamentArena!]! @derivedFrom(field: "tournament")
+  qualifications: [TournamentQualification!]! @derivedFrom(field: "tournament")
+}
+
+type TournamentArena {
+  id: ID! # tournamentId-round-arenaId
+  tournament: Tournament!
+  round: Int!
+  arena: Arena!
+}
+
+type TournamentQualification {
+  id: ID! # tournamentId-round-player
+  tournament: Tournament!
+  round: Int!
+  player: Player!
+}
+
+type EmergencyEvent {
+  id: ID! # txHash-logIndex
+  arenaId: BigInt
+  player: Player
+  amount: BigInt
+  eventType: String! # "withdraw" | "paused" | "unpaused"
+  blockNumber: Int!
+  timestamp: Int!
+}
+
+type TreasuryWithdrawal {
+  id: ID! # txHash-logIndex
+  to: String!
+  amount: BigInt!
+  blockNumber: Int!
+  timestamp: Int!
+}
+
+type ProtocolStats {
+  id: ID! # "singleton"
+  totalArenas: Int!
+  totalPlayers: Int!
+  totalVolume: BigInt!
+  totalTournaments: Int!
+  isPaused: Boolean!
+}

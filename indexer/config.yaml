@@ -1,0 +1,37 @@
+# yaml-language-server: $schema=./node_modules/envio/evm.schema.json
+name: BlockArenaIndexer
+description: HyperIndex indexer for BlockArena Diamond proxy on MegaETH testnet
+
+contracts:
+  - name: BlockArena
+    abi_file_path: abis/BlockArena.json
+    handler: src/EventHandlers.ts
+    events:
+      - event: "ArenaCreated(uint256 indexed arenaId, uint8 tier, uint128 entryFee, uint40 startBlock, uint40 endBlock)"
+      - event: "ArenaFinalized(uint256 indexed arenaId, uint256 winnerCount, uint16 bestScore)"
+      - event: "ArenaReset(uint256 indexed arenaId, uint32 newEpoch)"
+      - event: "PlayerJoined(uint256 indexed arenaId, address indexed player, address indexed ref)"
+      - event: "PredictionCommitted(uint256 indexed arenaId, address indexed player)"
+      - event: "PredictionRevealed(uint256 indexed arenaId, address indexed player)"
+      - event: "PotDistributed(uint256 indexed arenaId, address indexed winner, uint256 amount)"
+      - event: "ReferralPaid(address indexed ref, address indexed player, uint256 amount)"
+      - event: "ReferrerSet(address indexed player, address indexed ref)"
+      - event: "GodStreakUpdate(address indexed player, uint16 streak)"
+      - event: "BotDetected(address player, string reason)"
+      - event: "TournamentCreated(uint256 indexed tournamentId, uint8 tier, uint8 roundCount, uint8 arenasPerRound)"
+      - event: "TournamentFinalized(uint256 indexed tournamentId)"
+      - event: "TournamentArenaAdded(uint256 indexed tournamentId, uint8 round, uint256 arenaId)"
+      - event: "TournamentPlayerQualified(uint256 indexed tournamentId, uint8 round, address indexed player)"
+      - event: "EmergencyWithdraw(uint256 indexed arenaId, address indexed player, uint256 amount)"
+      - event: "TreasuryWithdrawn(address indexed to, uint256 amount)"
+      - event: "Paused()"
+      - event: "Unpaused()"
+
+networks:
+  - id: 6343  # MegaETH testnet
+    rpc_config:
+      url: https://carrot.megaeth.com/rpc
+    start_block: 0
+    contracts:
+      - name: BlockArena
+        address: 0xDe32993819Ca96eb08e8bE8b7D5A31585a17D033
