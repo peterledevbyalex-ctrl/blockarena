@@ -45,7 +45,7 @@ function getOrDefaultStats(existing: ProtocolStats_t | undefined): ProtocolStats
 BlockArena.ArenaCreated.handler(async ({ event, context }) => {
   const arena: Arena_t = {
     id: event.params.arenaId.toString(),
-    tier: event.params.tier,
+    tier: Number(event.params.tier),
     entryFee: event.params.entryFee,
     startBlock: Number(event.params.startBlock),
     endBlock: Number(event.params.endBlock),
@@ -73,7 +73,7 @@ BlockArena.ArenaFinalized.handler(async ({ event, context }) => {
       ...arena,
       isFinalized: true,
       winnerCount: Number(event.params.winnerCount),
-      bestScore: event.params.bestScore,
+      bestScore: Number(event.params.bestScore),
       finalizedAt: event.block.number,
     });
   }
@@ -85,7 +85,7 @@ BlockArena.ArenaReset.handler(async ({ event, context }) => {
   if (arena) {
     context.Arena.set({
       ...arena,
-      epoch: event.params.newEpoch,
+      epoch: Number(event.params.newEpoch),
       isFinalized: false,
       playerCount: 0,
       winnerCount: 0,
@@ -222,7 +222,7 @@ BlockArena.ReferrerSet.handler(async ({ event, context }) => {
 BlockArena.GodStreakUpdate.handler(async ({ event, context }) => {
   const playerAddr = event.params.player.toLowerCase();
   const player = getOrDefaultPlayer(await context.Player.get(playerAddr), playerAddr);
-  context.Player.set({ ...player, godStreak: event.params.streak });
+  context.Player.set({ ...player, godStreak: Number(event.params.streak) });
 });
 
 BlockArena.BotDetected.handler(async ({ event, context }) => {
@@ -237,9 +237,9 @@ BlockArena.TournamentCreated.handler(async ({ event, context }) => {
   const id = event.params.tournamentId.toString();
   const tournament: Tournament_t = {
     id,
-    tier: event.params.tier,
-    roundCount: event.params.roundCount,
-    arenasPerRound: event.params.arenasPerRound,
+    tier: Number(event.params.tier),
+    roundCount: Number(event.params.roundCount),
+    arenasPerRound: Number(event.params.arenasPerRound),
     isFinalized: false,
   };
   context.Tournament.set(tournament);
@@ -259,7 +259,7 @@ BlockArena.TournamentFinalized.handler(async ({ event, context }) => {
 BlockArena.TournamentArenaAdded.handler(async ({ event, context }) => {
   const tournamentId = event.params.tournamentId.toString();
   const arenaId = event.params.arenaId.toString();
-  const round = event.params.round;
+  const round = Number(event.params.round);
 
   const ta: TournamentArena_t = {
     id: `${tournamentId}-${round}-${arenaId}`,
@@ -279,7 +279,7 @@ BlockArena.TournamentArenaAdded.handler(async ({ event, context }) => {
 BlockArena.TournamentPlayerQualified.handler(async ({ event, context }) => {
   const tournamentId = event.params.tournamentId.toString();
   const playerAddr = event.params.player.toLowerCase();
-  const round = event.params.round;
+  const round = Number(event.params.round);
 
   const tq: TournamentQualification_t = {
     id: `${tournamentId}-${round}-${playerAddr}`,
