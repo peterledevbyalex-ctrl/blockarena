@@ -21,7 +21,7 @@ function getOrDefaultPlayer(existing: Player | undefined, id: string): Player {
     totalWins: 0,
     totalEarnings: 0n,
     godStreak: 0,
-    referrer: undefined,
+    referrer_id: undefined,
     referralEarnings: 0n,
     isFlagged: false,
   };
@@ -43,10 +43,10 @@ function getOrDefaultStats(existing: ProtocolStats | undefined): ProtocolStats {
 BlockArena.ArenaCreated.handler(async ({ event, context }) => {
   const arena: Arena = {
     id: event.params.arenaId.toString(),
-    tier: event.params.tier,
+    tier: Number(event.params.tier),
     entryFee: event.params.entryFee,
-    startBlock: event.params.startBlock,
-    endBlock: event.params.endBlock,
+    startBlock: Number(event.params.startBlock),
+    endBlock: Number(event.params.endBlock),
     epoch: 0,
     playerCount: 0,
     isFinalized: false,
@@ -55,7 +55,7 @@ BlockArena.ArenaCreated.handler(async ({ event, context }) => {
     totalPot: 0n,
     createdAt: event.block.number,
     finalizedAt: undefined,
-    tournament: undefined,
+    tournament_id: undefined,
   };
   context.Arena.set(arena);
 
@@ -71,7 +71,7 @@ BlockArena.ArenaFinalized.handler(async ({ event, context }) => {
       ...arena,
       isFinalized: true,
       winnerCount: Number(event.params.winnerCount),
-      bestScore: event.params.bestScore,
+      bestScore: Number(event.params.bestScore),
       finalizedAt: event.block.number,
     });
   }
@@ -83,7 +83,7 @@ BlockArena.ArenaReset.handler(async ({ event, context }) => {
   if (arena) {
     context.Arena.set({
       ...arena,
-      epoch: event.params.newEpoch,
+      epoch: Number(event.params.newEpoch),
       isFinalized: false,
       playerCount: 0,
       winnerCount: 0,
@@ -106,18 +106,18 @@ BlockArena.PlayerJoined.handler(async ({ event, context }) => {
   context.Player.set({ ...player, totalArenas: player.totalArenas + 1 });
 
   // Set referrer if non-zero
-  if (refAddr !== "0x0000000000000000000000000000000000000000" && !player.referrer) {
+  if (refAddr !== "0x0000000000000000000000000000000000000000" && !player.referrer_id) {
     const ref = getOrDefaultPlayer(await context.Player.get(refAddr), refAddr);
     context.Player.set({ ...ref }); // ensure referrer exists
-    context.Player.set({ ...player, totalArenas: player.totalArenas + 1, referrer: refAddr });
+    context.Player.set({ ...player, totalArenas: player.totalArenas + 1, referrer_id: refAddr });
   }
 
   // Create arena entry
   const entryId = `${arenaId}-${playerAddr}`;
   context.ArenaEntry.set({
     id: entryId,
-    arena: arenaId,
-    player: playerAddr,
+    arena_id: arenaId,
+    player_id: playerAddr,
     committed: false,
     revealed: false,
     wonAmount: 0n,
@@ -188,9 +188,9 @@ BlockArena.ReferralPaid.handler(async ({ event, context }) => {
   const playerAddr = event.params.player.toLowerCase();
 
   context.ReferralPayment.set({
-    id: `${event.transaction.hash}-${event.logIndex}`,
-    referrer: refAddr,
-    player: playerAddr,
+    id: `${event.block.hash}-${event.logIndex}`,
+    referrer_id: refAddr,
+    player_id: playerAddr,
     amount: event.params.amount,
     blockNumber: event.block.number,
     timestamp: event.block.timestamp,
@@ -208,7 +208,7 @@ BlockArena.ReferrerSet.handler(async ({ event, context }) => {
   const player = getOrDefaultPlayer(await context.Player.get(playerAddr), playerAddr);
   const ref = getOrDefaultPlayer(await context.Player.get(refAddr), refAddr);
   context.Player.set({ ...ref }); // ensure exists
-  context.Player.set({ ...player, referrer: refAddr });
+  context.Player.set({ ...player, referrer_id: refAddr });
 });
 
 // ─── Streak Events ───
@@ -216,7 +216,7 @@ BlockArena.ReferrerSet.handler(async ({ event, context }) => {
 BlockArena.GodStreakUpdate.handler(async ({ event, context }) => {
   const playerAddr = event.params.player.toLowerCase();
   const player = getOrDefaultPlayer(await context.Player.get(playerAddr), playerAddr);
-  context.Player.set({ ...player, godStreak: event.params.streak });
+  context.Player.set({ ...player, godStreak: Number(event.params.streak) });
 });
 
 BlockArena.BotDetected.handler(async ({ event, context }) => {
@@ -231,9 +231,9 @@ BlockArena.TournamentCreated.handler(async ({ event, context }) => {
   const id = event.params.tournamentId.toString();
   context.Tournament.set({
     id,
-    tier: event.params.tier,
-    roundCount: event.params.roundCount,
-    arenasPerRound: event.params.arenasPerRound,
+    tier: Number(event.params.tier),
+    roundCount: Number(event.params.roundCount),
+    arenasPerRound: Number(event.params.arenasPerRound),
     isFinalized: false,
   });
 
@@ -252,32 +252,32 @@ BlockArena.TournamentFinalized.handler(async ({ event, context }) => {
 BlockArena.TournamentArenaAdded.handler(async ({ event, context }) => {
   const tournamentId = event.params.tournamentId.toString();
   const arenaId = event.params.arenaId.toString();
-  const round = event.params.round;
+  const round = Number(event.params.round);
 
   context.TournamentArena.set({
     id: `${tournamentId}-${round}-${arenaId}`,
-    tournament: tournamentId,
+    tournament_id: tournamentId,
     round,
-    arena: arenaId,
+    arena_id: arenaId,
   });
 
   // Link arena to tournament
   const arena = await context.Arena.get(arenaId);
   if (arena) {
-    context.Arena.set({ ...arena, tournament: tournamentId });
+    context.Arena.set({ ...arena, tournament_id: tournamentId });
   }
 });
 
 BlockArena.TournamentPlayerQualified.handler(async ({ event, context }) => {
   const tournamentId = event.params.tournamentId.toString();
   const playerAddr = event.params.player.toLowerCase();
-  const round = event.params.round;
+  const round = Number(event.params.round);
 
   context.TournamentQualification.set({
     id: `${tournamentId}-${round}-${playerAddr}`,
-    tournament: tournamentId,
+    tournament_id: tournamentId,
     round,
-    player: playerAddr,
+    player_id: playerAddr,
   });
 });
 
@@ -285,9 +285,9 @@ BlockArena.TournamentPlayerQualified.handler(async ({ event, context }) => {
 
 BlockArena.EmergencyWithdraw.handler(async ({ event, context }) => {
   context.EmergencyEvent.set({
-    id: `${event.transaction.hash}-${event.logIndex}`,
+    id: `${event.block.hash}-${event.logIndex}`,
     arenaId: event.params.arenaId,
-    player: event.params.player.toLowerCase(),
+    player_id: event.params.player.toLowerCase(),
     amount: event.params.amount,
     eventType: "withdraw",
     blockNumber: event.block.number,
@@ -297,9 +297,9 @@ BlockArena.EmergencyWithdraw.handler(async ({ event, context }) => {
 
 BlockArena.Paused.handler(async ({ event, context }) => {
   context.EmergencyEvent.set({
-    id: `${event.transaction.hash}-${event.logIndex}`,
+    id: `${event.block.hash}-${event.logIndex}`,
     arenaId: undefined,
-    player: undefined,
+    player_id: undefined,
     amount: undefined,
     eventType: "paused",
     blockNumber: event.block.number,
@@ -312,9 +312,9 @@ BlockArena.Paused.handler(async ({ event, context }) => {
 
 BlockArena.Unpaused.handler(async ({ event, context }) => {
   context.EmergencyEvent.set({
-    id: `${event.transaction.hash}-${event.logIndex}`,
+    id: `${event.block.hash}-${event.logIndex}`,
     arenaId: undefined,
-    player: undefined,
+    player_id: undefined,
     amount: undefined,
     eventType: "unpaused",
     blockNumber: event.block.number,
@@ -327,7 +327,7 @@ BlockArena.Unpaused.handler(async ({ event, context }) => {
 
 BlockArena.TreasuryWithdrawn.handler(async ({ event, context }) => {
   context.TreasuryWithdrawal.set({
-    id: `${event.transaction.hash}-${event.logIndex}`,
+    id: `${event.block.hash}-${event.logIndex}`,
     to: event.params.to.toLowerCase(),
     amount: event.params.amount,
     blockNumber: event.block.number,
